@@ -10,16 +10,16 @@
 
 
 GLfloat vertices[] = {
-	//    COORDINATES      |         COLORS         //
-	-0.5f, -0.5f,  0.0f,		1.0f, 0.0f, 0.0f,   // Bottom left
-	-0.5f,  0.5f,  0.0f,		0.0f, 1.0f, 0.0f,   // Top left
-	 0.f,  0.5f,  0.0f,		0.0f, 0.0f, 1.0f,   // Top right
-	 0.5f, -0.5f,  0.0f,		1.0f, 1.0f, 1.0f,   // Bottom right
+	//    COORDINATES      |         COLORS         |               //
+	-0.5f, -0.5f,  0.0f,		1.0f, 0.0f, 0.0f,		0.0f, 0.0f, // Bottom left
+	-0.5f,  0.5f,  0.0f,		0.0f, 1.0f, 0.0f,		0.0f, 1.0f, // Top left
+	 0.5f,  0.5f,  0.0f,		0.0f, 0.0f, 1.0f,		1.0f, 1.0f, // Top right
+	 0.5f, -0.5f,  0.0f,		1.0f, 1.0f, 1.0f,		1.0f, 0.0f, // Bottom right
 };
 
 GLuint indices[] = {
-	0, 2, 1, // Upper triangle
-	0, 3, 2, // Lower triangle
+	0, 2, 1,  // Upper triangle
+	0, 3, 2,  // Lower triangle
 };
 
 
@@ -47,7 +47,7 @@ int main() {
 	glViewport(0, 0, 800, 800);
 
 	// Creates Shader Object using vertices shader and fragment shader
-	Shader shaderProgram("default.vert", "default.frag");
+	Shader shaderProgram("res/Shaders/default.vert", "res/Shaders/default.frag");
 
 	// Vertex Array Object
 	VAO VAO1;
@@ -59,8 +59,9 @@ int main() {
 	EBO EBO1(indices, sizeof(indices));
 
 	// Links VBO attributes (coordinates, colors) to VAO 
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
 	// Unbind all objects
 	VAO1.Unbind();
@@ -68,7 +69,34 @@ int main() {
 	EBO1.Unbind();
 
 	// Gets ID of uniform "scale"
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+	GLuint scaleUni = glGetUniformLocation(shaderProgram.ID, "scale");
+
+
+	// Texture
+	int widthImg, heightImg, numColCh;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* bytes = stbi_load("res/Textures/pop_cat.png", &widthImg, &heightImg, &numColCh, 0);
+
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glActiveTexture(GL_TEXTURE);
+	glBindTexture(GL_TEXTURE_2D, texture); 
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_NEAREST);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(bytes);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	GLuint tex0Uni = glGetUniformLocation(shaderProgram.ID, "tex0");
+	shaderProgram.Activate();
+	glUniform1i(tex0Uni, 0);
 
 
 	// Main loop
@@ -80,7 +108,8 @@ int main() {
 		// Tell OpenGL which Shader Program to use
 		shaderProgram.Activate();
 		// Assigns a value to the uniform
-		glUniform1f(uniID, 0.5f);
+		glUniform1f(scaleUni, 0.5f);
+		glBindTexture(GL_TEXTURE_2D, texture);
 		// Bind the VAO to tell OpenGL to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
@@ -92,6 +121,7 @@ int main() {
 	}
 
 	// Delete objects
+	glDeleteTextures(1, &texture);
 	VBO1.Delete();
 	VAO1.Delete();
 	EBO1.Delete();

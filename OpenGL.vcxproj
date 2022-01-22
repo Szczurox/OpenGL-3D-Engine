@@ -145,23 +145,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="shaderClass.cpp" />
-    <ClCompile Include="stb.cpp" />
-    <ClCompile Include="VAO.cpp" />
-    <ClCompile Include="VBO.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\shaderClass.cpp" />
+    <ClCompile Include="src\stb.cpp" />
+    <ClCompile Include="src\VAO.cpp" />
+    <ClCompile Include="src\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
+    <None Include="res\Shaders\default.frag" />
+    <None Include="res\Shaders\default.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EBO.h" />
-    <ClInclude Include="VAO.h" />
-    <ClInclude Include="VBO.h" />
-    <ClInclude Include="shaderClass.h" />
+    <ClInclude Include="src\EBO.h" />
+    <ClInclude Include="src\VAO.h" />
+    <ClInclude Include="src\VBO.h" />
+    <ClInclude Include="src\shaderClass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Textures\pop_cat.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
