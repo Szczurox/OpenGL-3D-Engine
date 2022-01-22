@@ -13,7 +13,7 @@ GLfloat vertices[] = {
 	//    COORDINATES      |         COLORS         //
 	-0.5f, -0.5f,  0.0f,		1.0f, 0.0f, 0.0f,   // Bottom left
 	-0.5f,  0.5f,  0.0f,		0.0f, 1.0f, 0.0f,   // Top left
-	 0.5f,  0.5f,  0.0f,		0.0f, 0.0f, 1.0f,   // Top right
+	 0.f,  0.5f,  0.0f,		0.0f, 0.0f, 1.0f,   // Top right
 	 0.5f, -0.5f,  0.0f,		1.0f, 1.0f, 1.0f,   // Bottom right
 };
 
