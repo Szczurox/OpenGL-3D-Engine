@@ -1,4 +1,4 @@
-#include"shaderClass.h"
+#include"shaderClass.hpp"
 
 // Reads text file and outputs string with text file content
 std::string get_file_contents(const char* filename) {
