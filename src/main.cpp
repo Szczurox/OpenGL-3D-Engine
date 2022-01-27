@@ -1,12 +1,26 @@
-#include"Mesh.hpp"
+#include<iostream>
+#include<glad/glad.h>
+#include<GLFW/glfw3.h>
+#include<stb/stb_image.h>
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
+
+#include"shaderClass.hpp"
+#include"VAO.hpp"
+#include"VBO.hpp"
+#include"EBO.hpp"
+#include"Texture.hpp"
+#include"Camera.hpp"
+
 
 // Vertices coordinates of a pyramid
-Vertex vertices[] = 
-{ //         COORDINATES				 |            COLORS          |          TexCoord          |         NORMALS       //
-	Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-	Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-	Vertex{glm::vec3(1.0f, 0.0f, -1.0f),  glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
-	Vertex{glm::vec3(1.0f, 0.0f,  1.0f),  glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+GLfloat vertices[] =
+{ //     COORDINATES     |        COLORS          |    TexCoord   |        NORMALS       //
+	-1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
+	-1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 1.0f,		0.0f, 1.0f, 0.0f,
+	 1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f, 0.0f,
+	 1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 0.0f,		0.0f, 1.0f, 0.0f
 };
 
 // Indices of a pyramid for vertices order 
@@ -17,16 +31,16 @@ GLuint indices[] =
 };
 
 // Vertices coordinates of a cube
-Vertex lightVertices[] =
+GLfloat lightVertices[] =
 { //     COORDINATES     //
-	Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
+	-0.1f, -0.1f,  0.1f,
+	-0.1f, -0.1f, -0.1f,
+	 0.1f, -0.1f, -0.1f,
+	 0.1f, -0.1f,  0.1f,
+	-0.1f,  0.1f,  0.1f,
+	-0.1f,  0.1f, -0.1f,
+	 0.1f,  0.1f, -0.1f,
+	 0.1f,  0.1f,  0.1f
 };
 
 GLuint lightIndices[] =
@@ -50,8 +64,6 @@ GLuint lightIndices[] =
 const unsigned int windowWidth = 800;
 const unsigned int windowHeight = 800;
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-
 int main() {
 	// Initialize GLFW
 	glfwInit();
@@ -69,7 +81,6 @@ int main() {
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
-	glfwSetKeyCallback(window, key_callback);
 
 	// Load Glad
 	gladLoadGL();
@@ -77,44 +88,59 @@ int main() {
 	// Viewport of OpenGL in the Window
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	// Floor textures
-	Texture textures[] {
-		Texture("res/Textures/planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("res/Textures/planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE),
-	};
-
 	// Creates Shader Object using vertices shader and fragment shader
 	Shader shaderProgram("res/Shaders/default.vert", "res/Shaders/default.frag");
 
-	// Floor vertices, indices and textures
-	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
-	std::vector <GLuint> inds(indices, indices + sizeof(indices) / sizeof(GLuint));
-	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
-	// Floor mesh
-	Mesh floor(verts, inds, tex);
+	// Vertex Array Object
+	VAO VAO1;
+	VAO1.Bind();
 
-	// Shader for the Light Cube
+	// Vertex Buffer Object linked to veritces
+	VBO VBO1(vertices, sizeof(vertices));
+	// Element Buffer Object  linked to indices
+	EBO EBO1(indices, sizeof(indices));
+
+	// Links VBO attributes to VAO 
+	// Step between vertices
+	GLsizeiptr stride = 11 * sizeof(float);
+	// Coordinates
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, stride, (void*)0);
+	// Colors
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, stride, (void*)(3 * sizeof(float)));
+	// Texture coordinates
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, stride, (void*)(6 * sizeof(float)));
+	// Normals
+	VAO1.LinkAttrib(VBO1, 3, 3, GL_FLOAT, stride, (void*)(8 * sizeof(float)));
+
+	// Unbind all objects to prevent accidentally modifying them
+	VAO1.Unbind();
+	VBO1.Unbind();
+	EBO1.Unbind();
+
+
+	// Shader for the Cube
 	Shader lightShader("res/Shaders/light.vert", "res/Shaders/light.frag");
-	Shader cubeShader("res/Shaders/light.vert", "res/Shaders/light.frag");
+	// Generates Vertex Array Object and binds it
+	VAO lightVAO;
+	lightVAO.Bind();
+	// Generates Vertex Buffer Object and links it to vertices
+	VBO lightVBO(lightVertices, sizeof(lightVertices));
+	// Generates Element Buffer Object and links it to indices
+	EBO lightEBO(lightIndices, sizeof(lightIndices));
+	// Links VBO attributes such as coordinates and colors to VAO
+	lightVAO.LinkAttrib(lightVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+	// Unbind all objects to prevent accidentally modifying them
+	lightVAO.Unbind();
+	lightVBO.Unbind();
+	lightEBO.Unbind();
 
-	// Light Cube vertices, indices and textures
-	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
-	std::vector <GLuint> lightInds(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
-	// Light Cube Mesh
-	Mesh cube(lightVerts, lightInds, tex);
-	Mesh light(lightVerts, lightInds, tex);
-
+	
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Sets Cube and Pyramid position
 	glm::vec3 lightPos = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
-
-	// Sets Cube and Pyramid position
-	glm::vec3 cubePos = glm::vec3(0.0f, 0.5f, 0.0f);
-	glm::mat4 cubeModel = glm::mat4(1.0f);
-	cubeModel = glm::translate(cubeModel, cubePos);
 
 	glm::vec3 objectPos = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::mat4 objectModel = glm::mat4(1.0f);
@@ -127,12 +153,6 @@ int main() {
 	// Exports the Cube Light Color to the Fragment Shader
 	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 
-	cubeShader.Activate();
-	// Exports the Cube Model matrix to the Fragment Shader
-	glUniformMatrix4fv(glGetUniformLocation(cubeShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(cubeModel));
-	// Exports the Cube Light Color to the Fragment Shader
-	glUniform4f(glGetUniformLocation(cubeShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-
 	shaderProgram.Activate();
 	// Exports the Pyramid Model matrix to the Fragment Shader
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
@@ -141,6 +161,16 @@ int main() {
 	// Exports the Pyramid Light Position to the Fragment Shader for lighting
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
+	// Gets ID of uniform "scale"
+	GLuint scaleUni = glGetUniformLocation(shaderProgram.ID, "scale");
+
+
+	// Texture
+	// Generates texture
+	Texture planksTex("res/Textures/planks.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+	planksTex.texUnit(shaderProgram, "tex0", 0);
+	Texture planksSpec("res/Textures/planksSpec.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+	planksSpec.texUnit(shaderProgram, "tex1", 1);
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -160,9 +190,28 @@ int main() {
 		// Updates camera
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		floor.Draw(shaderProgram, camera);
-		light.Draw(lightShader, camera);
-		cube.Draw(cubeShader, camera);
+		// Tell OpenGL which Shader Program to use
+		shaderProgram.Activate();
+		// Exports the Camera Position to the Fragment Shader for specular lighting
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+		// Exports camera matrix to the Vertex Shader of the pyramid
+		camera.Matrix(shaderProgram, "camMatrix");
+		// Bind texture to make it appear in rendering
+		planksTex.Bind();
+		planksSpec.Bind();
+		// Bind the VAO to tell OpenGL to use it
+		VAO1.Bind();
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+
+		// Tells OpenGL which Shader Program we want to use
+		lightShader.Activate();
+		// Export the camera matrix to the Vertex Shader of the light cube
+		camera.Matrix(lightShader, "camMatrix");
+		// Bind the VAO so OpenGL knows to use it
+		lightVAO.Bind();
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -171,6 +220,14 @@ int main() {
 	}
 
 	// Delete objects
+	VBO1.Delete();
+	VAO1.Delete();
+	EBO1.Delete();
+	lightVAO.Delete();
+	lightVBO.Delete();
+	lightEBO.Delete();
+	planksTex.Delete();
+	planksSpec.Delete();
 	lightShader.Delete();
 	shaderProgram.Delete();
 
@@ -180,11 +237,3 @@ int main() {
 
 	return 0;
 }  
-
-// Key callback handling
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
-	// On ESC key press close the window
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
