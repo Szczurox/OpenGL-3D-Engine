@@ -12,6 +12,7 @@ class Texture {
 		GLuint ID;
 		// Texture type
 		GLenum type;
+		GLuint unit;
 		// Constructor that generates Texture
 		Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
 

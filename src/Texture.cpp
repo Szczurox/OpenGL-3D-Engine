@@ -15,7 +15,8 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	// Generates a texture object
 	glGenTextures(1, &ID);
 	// Assigns the texture to a Texture Unit
-	glActiveTexture(slot);
+	glActiveTexture(GL_TEXTURE0 + slot);
+	unit = slot; 
 	glBindTexture(texType, ID);
 
 	// Configures algorithm used to make the image smaller or bigger
@@ -50,6 +51,7 @@ void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {
 
 // Binds Texture
 void Texture::Bind() {
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(type, ID);
 }
 
