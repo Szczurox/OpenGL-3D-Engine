@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,6 +48,15 @@
     <ClCompile Include="src\stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EBO.hpp">
@@ -68,6 +74,12 @@
     <ClInclude Include="src\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resourceManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.vert">
@@ -76,14 +88,24 @@
     <None Include="res\Shaders\default.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="res\Shaders\light.vert" />
-    <None Include="res\Shaders\light.frag" />
+    <None Include="res\Shaders\light.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Shaders\light.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
     <Image Include="res\Textures\obama.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="res\Textures\specPlanks.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="res\Textures\planks.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>
