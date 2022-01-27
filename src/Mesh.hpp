@@ -17,10 +17,18 @@ public:
 
 	VAO VAO;
 
+<<<<<<< HEAD
 	Mesh();
 	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 
 	void Draw(Shader& Shader, Camera& Camera);
+=======
+		Mesh();
+		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
+
+		void Generate(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
+		void Draw(Shader& Shader, Camera& Camera);
+>>>>>>> parent of 73c726d (Revert "Objects")
 };
 
 #endif

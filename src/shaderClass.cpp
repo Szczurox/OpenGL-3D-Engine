@@ -15,9 +15,12 @@ std::string get_file_contents(const char* filename) {
 	throw(errno);
 }
 
+<<<<<<< HEAD
 Shader::Shader() {
 	ID = glCreateProgram();
 };
+=======
+>>>>>>> parent of 73c726d (Revert "Objects")
 
 // Constructor that builds the Shader Program from 2 shaders
 Shader::Shader(const char* vertFile, const char* fragFile) {

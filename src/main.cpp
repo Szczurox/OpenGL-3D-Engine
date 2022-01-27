@@ -104,6 +104,7 @@ int main() {
 	std::vector <GLuint> lightInds(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 	// Light Cube Mesh
 	Mesh light(lightVerts, lightInds, tex);
+	Mesh cube(lightVerts, lightInds, tex);
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -122,9 +123,18 @@ int main() {
 	// Exports the Cube Light Color to the Fragment Shader
 	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 
+<<<<<<< HEAD
+=======
+	cubeShader.Activate();
+	// Exports the Cube Model matrix to the Fragment Shader
+	glUniformMatrix4fv(glGetUniformLocation(cubeShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(cubeModel));
+	// Exports the Cube Light Color to the Fragment Shader
+	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+
+>>>>>>> parent of 73c726d (Revert "Objects")
 	shaderProgram.Activate();
 	// Exports the Pyramid Model matrix to the Fragment Shader
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(cubeModel));
 	// Exports the Pyramid Light Color to the Fragment Shader
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	// Exports the Pyramid Light Position to the Fragment Shader for lighting
@@ -158,8 +168,12 @@ int main() {
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		floor.Draw(shaderProgram, camera);
+<<<<<<< HEAD
 		light.Draw(lightShader, camera);
 		Cube.Instantiate(camera);
+=======
+		cube.Draw(cubeShader, camera);
+>>>>>>> parent of 73c726d (Revert "Objects")
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
