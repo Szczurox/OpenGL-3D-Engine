@@ -1,6 +1,7 @@
 #include"Mesh.hpp"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Mesh::Mesh() {};
 
 Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
@@ -13,6 +14,9 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vec
 
 void Mesh::Generate(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
 >>>>>>> parent of 73c726d (Revert "Objects")
+=======
+Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
+>>>>>>> parent of 1661867 (Objects)
 	Mesh::veritces = vertices;
 	Mesh::indices = indices;
 	Mesh::textures = textures;

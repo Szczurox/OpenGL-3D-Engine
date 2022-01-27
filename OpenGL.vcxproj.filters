@@ -55,6 +55,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="src\Object.cpp">
 =======
     <ClCompile Include="src\GameObject.cpp">
@@ -64,6 +65,8 @@
 >>>>>>> parent of 73c726d (Revert "Objects")
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> parent of 1661867 (Objects)
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EBO.hpp">
@@ -85,6 +88,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="src\Object.hpp">
 =======
     <ClInclude Include="src\GameObject.hpp">
@@ -94,6 +98,8 @@
 >>>>>>> parent of 73c726d (Revert "Objects")
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> parent of 1661867 (Objects)
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.vert">
@@ -109,6 +115,7 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <None Include="res\Shaders\collider.vert" />
     <None Include="res\Shaders\collider.frag" />
 =======
@@ -116,6 +123,8 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
 >>>>>>> parent of 73c726d (Revert "Objects")
+=======
+>>>>>>> parent of 1661867 (Objects)
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
