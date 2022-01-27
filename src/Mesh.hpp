@@ -17,10 +17,8 @@ class Mesh {
 
 		VAO VAO;
 
-		Mesh();
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 
-		void Generate(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 		void Draw(Shader& Shader, Camera& Camera);
 };
 
