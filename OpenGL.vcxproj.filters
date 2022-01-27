@@ -54,6 +54,12 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ColliderMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EBO.hpp">
@@ -74,6 +80,12 @@
     <ClInclude Include="src\Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ColliderMesh.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.vert">
@@ -86,6 +98,9 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="res\Shaders\light.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="src\collider.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

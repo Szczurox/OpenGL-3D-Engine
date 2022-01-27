@@ -1,6 +1,12 @@
 #include"Mesh.hpp"
 
-Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
+Mesh::Mesh() {}
+
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures) {
+	Mesh::Generate(vertices, indices, textures);
+}
+
+void Mesh::Generate(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
 	Mesh::veritces = vertices;
 	Mesh::indices = indices;
 	Mesh::textures = textures;
