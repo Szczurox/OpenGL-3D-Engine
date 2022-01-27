@@ -15,14 +15,16 @@ std::string get_file_contents(const char* filename) {
 	throw(errno);
 }
 
-// Activates the Shader Program
-Shader& Shader::Activate() {
-	glUseProgram(ID);
-	return *this;
-};
-
 // Constructor that builds the Shader Program from 2 shaders
-void Shader::Compile(const char* vertexSource, const char* fragmentSource) {
+Shader::Shader(const char* vertFile, const char* fragFile) {
+	// Get shaders source from files
+	std::string vertCode = get_file_contents(vertFile);
+	std::string fragCode = get_file_contents(fragFile);
+
+	// Convert shader source strings into character arrays
+	const char* vertexSource = vertCode.c_str();
+	const char* fragmentSource = fragCode.c_str();
+
 	// Create and compile the Vertex Shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexSource, NULL);
@@ -51,7 +53,13 @@ void Shader::Compile(const char* vertexSource, const char* fragmentSource) {
 	// Delete Vertex and Fragment Shader objects
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
 }
+
+// Activates the Shader Program
+void Shader::Activate() {
+	glUseProgram(ID);
+};
 
 // Deletes the Shader Program
 void Shader::Delete() {

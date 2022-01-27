@@ -147,12 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="glad.c" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\resourceManager.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -169,17 +167,13 @@
   <ItemGroup>
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\EBO.hpp" />
-    <ClInclude Include="src\Game.hpp" />
-    <ClInclude Include="src\resourceManager.hpp" />
     <ClInclude Include="src\VAO.hpp" />
     <ClInclude Include="src\VBO.hpp" />
     <ClInclude Include="src\shaderClass.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\obama.png" />
-    <Image Include="res\Textures\planks.png" />
     <Image Include="res\Textures\pop_cat.png" />
-    <Image Include="res\Textures\specPlanks.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
