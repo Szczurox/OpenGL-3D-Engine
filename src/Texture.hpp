@@ -11,10 +11,10 @@ class Texture {
 		// Reference ID of Texture
 		GLuint ID;
 		// Texture type
-		GLenum type;
+		const char* type;
 		GLuint unit;
 		// Constructor that generates Texture
-		Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
+		Texture(const char* image, const char* texType, GLenum slot, GLenum format, GLenum pixelType);
 
 		// Assigns a texture unit to a texture
 		void texUnit(Shader& shader, const char* uniform, GLuint unit);
