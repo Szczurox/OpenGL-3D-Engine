@@ -10,16 +10,17 @@
 #include"Texture.hpp"
 
 class Mesh {
-	public: 
-		std::vector<Vertex> veritces;
-		std::vector<GLuint> indices;
-		std::vector<Texture> textures;
+public:
+	std::vector<Vertex> veritces;
+	std::vector<GLuint> indices;
+	std::vector<Texture> textures;
 
-		VAO VAO;
+	VAO VAO;
 
-		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
+	Mesh();
+	Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 
-		void Draw(Shader& Shader, Camera& Camera);
+	void Draw(Shader& Shader, Camera& Camera);
 };
 
 #endif

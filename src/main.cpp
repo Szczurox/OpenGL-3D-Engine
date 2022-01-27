@@ -1,7 +1,7 @@
-#include"Mesh.hpp"
+#include"Object.hpp"
 
 // Vertices coordinates of a pyramid
-Vertex vertices[] = 
+Vertex vertices[] =
 { //         COORDINATES				 |            COLORS          |          TexCoord          |         NORMALS       //
 	Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
 	Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
@@ -77,8 +77,11 @@ int main() {
 	// Viewport of OpenGL in the Window
 	glViewport(0, 0, windowWidth, windowHeight);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Floor textures
-	Texture textures[] {
+	Texture textures[]{
 		Texture("res/Textures/planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
 		Texture("res/Textures/planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE),
 	};
@@ -95,13 +98,11 @@ int main() {
 
 	// Shader for the Light Cube
 	Shader lightShader("res/Shaders/light.vert", "res/Shaders/light.frag");
-	Shader cubeShader("res/Shaders/light.vert", "res/Shaders/light.frag");
 
 	// Light Cube vertices, indices and textures
 	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 	std::vector <GLuint> lightInds(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
 	// Light Cube Mesh
-	Mesh cube(lightVerts, lightInds, tex);
 	Mesh light(lightVerts, lightInds, tex);
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -111,27 +112,15 @@ int main() {
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
 
-	// Sets Cube and Pyramid position
-	glm::vec3 cubePos = glm::vec3(0.0f, 0.5f, 0.0f);
-	glm::mat4 cubeModel = glm::mat4(1.0f);
-	cubeModel = glm::translate(cubeModel, cubePos);
-
 	glm::vec3 objectPos = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::mat4 objectModel = glm::mat4(1.0f);
 	objectModel = glm::translate(objectModel, objectPos);
-
 
 	lightShader.Activate();
 	// Exports the Cube Model matrix to the Fragment Shader
 	glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
 	// Exports the Cube Light Color to the Fragment Shader
 	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
-
-	cubeShader.Activate();
-	// Exports the Cube Model matrix to the Fragment Shader
-	glUniformMatrix4fv(glGetUniformLocation(cubeShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(cubeModel));
-	// Exports the Cube Light Color to the Fragment Shader
-	glUniform4f(glGetUniformLocation(cubeShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 
 	shaderProgram.Activate();
 	// Exports the Pyramid Model matrix to the Fragment Shader
@@ -142,12 +131,20 @@ int main() {
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 
+	// Objects
+	Mesh cube(lightVerts, lightInds, tex);
+	Shader cubeShader("res/Shaders/light.vert", "res/Shaders/light.frag");
+	Object Cube(cubeShader, cube, "model");
+	Cube.Color(glm::vec4(1.0f, 1.0f, 1.0f, 0.3f), "lightColor");
+	Cube.Move(glm::vec3(0.0f, 0.1f, 0.0f));
+
+
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
 	// Camera
 	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
-	
+
 	// Main loop
 	while (!glfwWindowShouldClose(window)) {
 		// Background color
@@ -155,14 +152,14 @@ int main() {
 		// Clear the back buffer, depth buffer and assign the new color
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Get user inputs and adjust camera
+		// Get user inputs and adjust camera 
 		camera.Inputs(window);
 		// Updates camera
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		floor.Draw(shaderProgram, camera);
 		light.Draw(lightShader, camera);
-		cube.Draw(cubeShader, camera);
+		Cube.Instantiate(camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -179,7 +176,7 @@ int main() {
 	glfwTerminate();
 
 	return 0;
-}  
+}
 
 // Key callback handling
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)

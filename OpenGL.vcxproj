@@ -152,6 +152,7 @@
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -160,6 +161,8 @@
     <ClCompile Include="src\Texture.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\collider.frag" />
+    <None Include="res\Shaders\collider.vert" />
     <None Include="res\Shaders\default.frag" />
     <None Include="res\Shaders\default.vert" />
     <None Include="res\Shaders\light.frag" />
@@ -169,6 +172,7 @@
     <ClInclude Include="src\Mesh.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\EBO.hpp" />
+    <ClInclude Include="src\Object.hpp" />
     <ClInclude Include="src\VAO.hpp" />
     <ClInclude Include="src\VBO.hpp" />
     <ClInclude Include="src\shaderClass.hpp" />

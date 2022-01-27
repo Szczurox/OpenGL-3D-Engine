@@ -54,6 +54,9 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EBO.hpp">
@@ -74,6 +77,9 @@
     <ClInclude Include="src\Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.vert">
@@ -88,6 +94,8 @@
     <None Include="res\Shaders\light.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="res\Shaders\collider.vert" />
+    <None Include="res\Shaders\collider.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
