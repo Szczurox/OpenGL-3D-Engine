@@ -38,7 +38,6 @@ class Object {
 		void Color(glm::vec4 color, const GLchar* uniform);
 		// Creates object in the main while loop
 		void Instantiate(Camera& camera);
-		void Instantiate(Camera& camera, glm::vec3 coordinates);
 };
 
 #endif

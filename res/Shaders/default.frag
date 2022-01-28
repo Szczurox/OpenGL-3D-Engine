@@ -56,7 +56,6 @@ vec4 pointLight() {
 	float specAmount = pow(max(dot(viewDir, reflectDir), 0.0f), 16);
 	float specular = specAmount * specLight;
 
-
 	return (texture(diffuse0, texCoord) * (diffuse * inten + ambient) + texture(specular0, texCoord).r * specular * inten) * lightColor;
 }
 

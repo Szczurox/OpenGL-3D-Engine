@@ -22,19 +22,22 @@ out vec2 texCoord;
 // Gets the camera matrix
 uniform mat4 camMatrix;
 // Gets the model matrix
+uniform mat4 translation;
+uniform mat4 rotation;
+uniform mat4 scale;
 uniform mat4 model;
 
 
 void main()
 {
 	// Calculates current position
-	curPos = vec3(model * vec4(aPos, 1.0f));
+	curPos = vec3(model * translation * -rotation * scale * vec4(aPos, 1.0f));
 	// Assigns the normal from the Vertex Data to "normal"
 	normal = aNormal;
 	// Assigns the colors from the Vertex Data to "color"
 	color = aColor;
 	// Assigns the texture coordinates from the Vertex Data to "texCoord"
-	texCoord = aTex;
+	texCoord = mat2(0.0, -1.0, 1.0, 0.0) * aTex;
 
 	// Outputs the positions of all vertices
 	gl_Position = camMatrix * vec4(curPos, 1.0);

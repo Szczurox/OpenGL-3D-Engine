@@ -1,7 +1,7 @@
 #include"Texture.hpp"
 
 // Constructor that generates Texture
-Texture::Texture(const char* image, const char* texType, GLenum slot, GLenum format, GLenum pixelType) {
+Texture::Texture(const char* image, const char* texType, GLuint slot) {
 	type = texType;
 	// image width, height and number of color channels
 	int widthImg, heightImg, numColCh;
@@ -14,7 +14,7 @@ Texture::Texture(const char* image, const char* texType, GLenum slot, GLenum for
 	glGenTextures(1, &ID);
 	// Assigns the texture to a Texture Unit
 	glActiveTexture(GL_TEXTURE0 + slot);
-	unit = slot; 
+	unit = slot;
 	glBindTexture(GL_TEXTURE_2D, ID);
 
 	// Configures algorithm used to make the image smaller or bigger
@@ -25,8 +25,22 @@ Texture::Texture(const char* image, const char* texType, GLenum slot, GLenum for
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	// Assigns the image to the Texture object
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes);
+	// Automatically recognizes texture type and assigns the image to the Texture object
+	switch (numColCh) {
+		case 4: 
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+			break;
+		case 3:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RGB, GL_UNSIGNED_BYTE, bytes);
+			break;
+		case 1:
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RED, GL_UNSIGNED_BYTE, bytes);
+			break;
+		default:
+			throw std::invalid_argument("Texture type recognition failed");
+			
+	}
+
 	// Generates MipMaps
 	glGenerateMipmap(GL_TEXTURE_2D);
 

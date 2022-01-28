@@ -19,6 +19,18 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{75bb99b6-e053-4ba8-9f7a-f497ee6e6b84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{897771db-91d3-461e-aa67-4bf043ff37b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models\bunny">
+      <UniqueIdentifier>{0270aed1-c99c-46b6-b988-8f884e1624c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models\sword">
+      <UniqueIdentifier>{2f8eaf23-595b-45ee-aaa3-231f980bc46f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models\sword\textures">
+      <UniqueIdentifier>{172307ea-42f5-4d9f-97df-116cea9fe037}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -54,6 +66,9 @@
     <ClCompile Include="src\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
@@ -67,6 +82,15 @@
     </Image>
     <Image Include="res\Textures\planks.png">
       <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="res\Models\bunny\baseColor.png">
+      <Filter>Resource Files\Models\bunny</Filter>
+    </Image>
+    <Image Include="res\Models\bunny\metallicRoughness.png">
+      <Filter>Resource Files\Models\bunny</Filter>
+    </Image>
+    <Image Include="res\Models\sword\textures\Object001_mtl_baseColor.jpeg">
+      <Filter>Resource Files\Models\sword\textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +121,9 @@
     <ClInclude Include="src\Object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Model.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.frag">
@@ -110,6 +137,18 @@
     </None>
     <None Include="res\Shaders\light.vert">
       <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Models\bunny\scene.bin">
+      <Filter>Resource Files\Models\bunny</Filter>
+    </None>
+    <None Include="res\Models\bunny\scene.gltf">
+      <Filter>Resource Files\Models\bunny</Filter>
+    </None>
+    <None Include="res\Models\sword\scene.bin">
+      <Filter>Resource Files\Models\sword</Filter>
+    </None>
+    <None Include="res\Models\sword\scene.gltf">
+      <Filter>Resource Files\Models\sword</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -150,6 +150,7 @@
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
     <ClCompile Include="src\stb.cpp" />
@@ -158,6 +159,9 @@
     <ClCompile Include="src\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\Models\bunny\baseColor.png" />
+    <Image Include="res\Models\bunny\metallicRoughness.png" />
+    <Image Include="res\Models\sword\textures\Object001_mtl_baseColor.jpeg" />
     <Image Include="res\Textures\obama.png" />
     <Image Include="res\Textures\planks.png" />
     <Image Include="res\Textures\planksSpec.png" />
@@ -167,6 +171,7 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Model.hpp" />
     <ClInclude Include="src\Object.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\EBO.hpp" />
@@ -177,6 +182,10 @@
     <ClInclude Include="src\VBO.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Models\bunny\scene.bin" />
+    <None Include="res\Models\bunny\scene.gltf" />
+    <None Include="res\Models\sword\scene.bin" />
+    <None Include="res\Models\sword\scene.gltf" />
     <None Include="res\Shaders\default.frag" />
     <None Include="res\Shaders\default.vert" />
     <None Include="res\Shaders\light.frag" />

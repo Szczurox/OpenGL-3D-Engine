@@ -5,8 +5,7 @@
 #include<glm/glm.hpp>
 #include<vector>
 
-struct Vertex
-{
+struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
 	glm::vec3 color;
