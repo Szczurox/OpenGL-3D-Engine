@@ -150,6 +150,7 @@
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -166,6 +167,7 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Object.hpp" />
     <ClInclude Include="src\Camera.hpp" />
     <ClInclude Include="src\EBO.hpp" />
     <ClInclude Include="src\Mesh.hpp" />

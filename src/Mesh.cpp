@@ -1,5 +1,7 @@
 #include"Mesh.hpp"
 
+Mesh::Mesh() {};
+
 Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
 	Mesh::veritces = vertices;
 	Mesh::indices = indices;
