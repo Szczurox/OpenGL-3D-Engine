@@ -9,9 +9,18 @@ using json = nlohmann::json;
 
 class Model {
 	public:
+		// Model properties
+		glm::vec3 position = glm::vec3(0.0f);
+		glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+		glm::vec3 scale = glm::vec3(1.0f);
+
+		// Empty model
+		Model();
+
 		// Loads in a model from a file
 		Model(const char* file);
 
+		// Draws model
 		void Draw(Shader& shader, Camera& camera);
 
 	private:

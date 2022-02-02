@@ -1,5 +1,9 @@
 #include"Model.hpp"
 
+Model::Model() {
+	file = "";
+}
+
 Model::Model(const char* file) {
 	// Creates a JSON object
 	std::string text = get_file_contents(file);
@@ -13,11 +17,10 @@ Model::Model(const char* file) {
 	traverseNode(0);
 }
 
-
 void Model::Draw(Shader& shader, Camera& camera) {
 	// Goes over all meshes and draw them
 	for (unsigned int i = 0; i < meshes.size(); i++) {
-		meshes[i].Draw(shader, camera, matricesMeshes[i]);
+		meshes[i].Draw(shader, camera, matricesMeshes[i], glm::vec3(position.y, position.x, -position.z), rotation, scale);
 	}
 }
 
@@ -98,10 +101,6 @@ void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix) {
 
 	// Multiplies all matrices
 	glm::mat4 matNextNode = matrix * matNode * trans * rot * sca;
-
-	//std::cout << matNextNode[1].x << ", ";
-	//std::cout << matNextNode[1].y << ", ";
-	//std::cout << matNextNode[1].z << std::endl;
 
 	// Checks if the node contains a mesh and if it does then load it
 	if (node.find("mesh") != node.end()) {
@@ -241,16 +240,17 @@ std::vector<Texture> Model::getTextures() {
 
 		// Skips if the texture has already been loaded
 		if (!skip) {
+			GLuint size = GLuint(loadedTex.size());
 			// Loads diffuse texture
 			if (texPath.find("baseColor") != std::string::npos) {
-				Texture diffuse = Texture((fileDir + texPath).c_str(), "diffuse", loadedTex.size());
+				Texture diffuse = Texture((fileDir + texPath).c_str(), "diffuse", size);
 				textures.push_back(diffuse);
 				loadedTex.push_back(diffuse);
 				loadedTexName.push_back(texPath);
-			}
+			} 
 			// Loads specular texture
 			else if (texPath.find("metallicRoughness") != std::string::npos) {
-				Texture specular = Texture((fileDir + texPath).c_str(), "specular", loadedTex.size());
+				Texture specular = Texture((fileDir + texPath).c_str(), "specular", size);
 				textures.push_back(specular);
 				loadedTex.push_back(specular);
 				loadedTexName.push_back(texPath);

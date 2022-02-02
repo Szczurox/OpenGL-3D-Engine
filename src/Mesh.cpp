@@ -2,11 +2,17 @@
 
 Mesh::Mesh() {};
 
-Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
-	Mesh::veritces = vertices;
-	Mesh::indices = indices;
-	Mesh::textures = textures;
+Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures)
+	: vertices(vertices), indices(indices), textures(textures) {
+	calcVAO();
+}
 
+Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices)
+	: vertices(vertices), indices(indices) {
+	calcVAO();
+}
+
+void Mesh::calcVAO() {
 	// Vertex Array Object
 	VAO.Bind();
 
@@ -82,3 +88,4 @@ void Mesh::Draw (
 	// Draw the mesh
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
+

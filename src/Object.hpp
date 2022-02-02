@@ -4,40 +4,40 @@
 #include<string>
 #include<vector>
 
-#include"Mesh.hpp"
+#include"Model.hpp"
 
 // Object, allows to combine collider with texture
 class Object {
 	public:
-		// Empty shader and mesh
-		Shader emptyShader;
-		Mesh emptyMesh;
-
-		// Object type (model/collider/both)
-		std::string type = "both";
-
 		// Shaders
 		Shader& modelShader = emptyShader;
 		Shader& colliderShader = emptyShader;
-		// Meshes
-		Mesh& modelMesh = emptyMesh;
+		// Model and collider
+		Model& model = emptyModel;
 		Mesh& colliderMesh = emptyMesh;
 		// Object position
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-		// Object model
-		glm::mat4 model = glm::mat4(1.0f);
+		// The location of the Collider and Model relative to the center of the Object
+		glm::vec3 colliderPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 modelPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 
 		// Object constructors
 		Object() {}; // Empty
-		Object(Shader& shader, Mesh& mesh, std::string type); // Only 1
-		Object(Shader& textureShader, Mesh& mesh, Shader& colliderShader, Mesh& collider); // Both
+		Object(Shader& shader, Model& objectModel); // Only model
+		Object(Shader& shader, Mesh& colliderMesh); // Only collider
+		Object(Shader& textureShader, Model& objectModel, Shader& cShader, Mesh& collider); // Both
 
-		// Moves the Object in a specified direction with specified speed
+		// Moves the Object in a specified direction with a specified speed
 		void Move(glm::vec3 direction, GLfloat speed); 
-		// Sets Object's color
-		void Color(glm::vec4 color, const GLchar* uniform);
 		// Creates object in the main while loop
 		void Instantiate(Camera& camera);
+	private:
+		std::string type = "both";
+
+		// Empty shader, mesh and model
+		Shader emptyShader;
+		Mesh emptyMesh;
+		Model emptyModel;
 };
 
 #endif
