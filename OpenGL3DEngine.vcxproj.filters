@@ -31,6 +31,12 @@
     <Filter Include="Resource Files\Models\sword\textures">
       <UniqueIdentifier>{172307ea-42f5-4d9f-97df-116cea9fe037}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{78009f92-ae18-4929-b0e5-b160447b65c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{6769c3e9-cd37-46d5-a204-3cc626fc5c53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -69,8 +75,11 @@
     <ClCompile Include="src\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\BoxCollider.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Physics\Rigidbody.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsWorld.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,8 +136,11 @@
     <ClInclude Include="src\Model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\BoxCollider.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Physics\Rigidbody.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsWorld.hpp">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

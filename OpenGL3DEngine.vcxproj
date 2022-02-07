@@ -146,13 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="src\BoxCollider.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="src\Physics\Rigidbody.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -172,7 +173,8 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BoxCollider.hpp" />
+    <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
+    <ClInclude Include="src\Physics\Rigidbody.hpp" />
     <ClInclude Include="src\Model.hpp" />
     <ClInclude Include="src\Object.hpp" />
     <ClInclude Include="src\Camera.hpp" />

@@ -5,39 +5,38 @@
 #include<vector>
 
 #include"Model.hpp"
+#include"Physics/PhysicsWorld.hpp"
 
 // Object, allows to combine collider with texture
 class Object {
 	public:
 		// Shaders
 		Shader& modelShader = emptyShader;
-		Shader& colliderShader = emptyShader;
 		// Model and collider
 		Model& model = emptyModel;
-		Mesh& colliderMesh = emptyMesh;
+		// The location of the Collider and Model relative to the center of the Object
+		glm::vec3 modelPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		Rigidbody& rigidbody = emptyRigidbody;
+
 		// Object position
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-		// The location of the Collider and Model relative to the center of the Object
-		glm::vec3 colliderPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 modelPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
 
 		// Object constructors
 		Object() {}; // Empty
 		Object(Shader& shader, Model& objectModel); // Only model
-		Object(Shader& shader, Mesh& colliderMesh); // Only collider
-		Object(Shader& textureShader, Model& objectModel, Shader& cShader, Mesh& collider); // Both
+		Object(Shader& shader, Model& objectModel, Rigidbody& objectRigidbody); // Model with rigidbody
 
-		// Moves the Object in a specified direction with a specified speed
-		void Move(glm::vec3 direction, GLfloat speed); 
+		// Applies force to the object
+		void ApplyForce(glm::vec3 force); 
 		// Creates object in the main while loop
 		void Instantiate(Camera& camera);
 	private:
-		std::string type = "both";
-
 		// Empty shader, mesh and model
 		Shader emptyShader;
-		Mesh emptyMesh;
 		Model emptyModel;
+		Rigidbody emptyRigidbody;
 };
 
 #endif

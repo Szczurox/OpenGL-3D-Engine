@@ -1,4 +1,5 @@
 #include"Object.hpp"
+#include"Physics/PhysicsWorld.hpp"
 
 // Vertices coordinates of a floor
 Vertex vertices[] =
@@ -16,20 +17,20 @@ GLuint indices[] =
 	0, 2, 3
 };
 
-// Vertices coordinates of a collider
-Vertex colliderVertices[] =
+// Vertices coordinates of a cuboid
+Vertex cuboidVertices[] =
 { //     COORDINATES     //
-	Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
-	Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
-	Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
+	Vertex{glm::vec3(-0.1f, -0.2f,  0.3f)},
+	Vertex{glm::vec3(-0.1f, -0.2f, -0.3f)},
+	Vertex{glm::vec3(0.1f, -0.2f, -0.3f)},
+	Vertex{glm::vec3(0.1f, -0.2f,  0.3f)},
+	Vertex{glm::vec3(-0.1f,  0.2f,  0.3f)},
+	Vertex{glm::vec3(-0.1f,  0.2f, -0.3f)},
+	Vertex{glm::vec3(0.1f,  0.2f, -0.3f)},
+	Vertex{glm::vec3(0.1f,  0.2f,  0.3f)}
 };
 
-GLuint colliderIndices[] =
+GLuint cuboidIndices[] =
 {
 	0, 1, 2,
 	0, 2, 3,
@@ -68,6 +69,7 @@ int main() {
 		return -1;
 	}
 	glfwMakeContextCurrent(window);
+
 	glfwSetKeyCallback(window, key_callback);
 
 	// Load Glad
@@ -76,8 +78,8 @@ int main() {
 	// Viewport of OpenGL in the Window
 	glViewport(0, 0, windowWidth, windowHeight);
 
+	// Transparency
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Floor textures
 	Texture textures[]{
@@ -112,24 +114,9 @@ int main() {
 	// Exports the Light Position to the Floor Fragment Shader for lighting
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-	// Shader for the Light Cube
-	Shader colliderShader("res/Shaders/default.vert", "res/Shaders/default.frag");
-
-	// Collider vertices and indices
-	std::vector <Vertex> colliderVerts(colliderVertices, colliderVertices + sizeof(colliderVertices) / sizeof(Vertex));
-	std::vector <GLuint> colliderInds(colliderIndices, colliderIndices + sizeof(colliderIndices) / sizeof(GLuint));
-
-	Mesh collider(colliderVerts, colliderInds);
-
-	glm::vec4 colliderColor = glm::vec4(1.0f, 0.0f, 0.0f, 0.9f);
-
-	colliderShader.Activate();
-	// Exports the Cube Light Color to the Fragment Shader
-	glUniform4f(glGetUniformLocation(colliderShader.ID, "lightColor"), colliderColor.x, colliderColor.y, colliderColor.z, colliderColor.w);
-
 	Model bunnyModel("res/Models/bunny/scene.gltf");
-	Object bunny(shaderProgram, bunnyModel, colliderShader, collider);
-	bunny.colliderPosition = glm::vec3(0.0f, -0.13f, 0.018f);
+	Rigidbody body(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	Object bunny(shaderProgram, bunnyModel, body);
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -137,8 +124,31 @@ int main() {
 	// Camera
 	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
 
+	// variables for calcualting delta time
+	double prvTime = 0.0;
+	double curTime = 0.0;
+	GLfloat dt;
+	unsigned int counter = 0;
+
+	PhysicsWorld World;
+
+	World.AddObject("bunny", &body);
+
 	// Main loop
 	while (!glfwWindowShouldClose(window)) {
+		// FPS counter and calcualting delta time
+		curTime = glfwGetTime();
+		dt = curTime - prvTime;
+		counter++;
+		if (dt >= 1.0 / 30.0) {
+			// Setting current title to the new title with new FPS value
+			std::string FPS = std::to_string((1.0 / dt) * counter);
+			std::string ms = std::to_string((dt / counter) * 1000);
+			std::string title = "OpenGL - FPS: " + FPS + " / ms: " + ms;
+			glfwSetWindowTitle(window, title.c_str());
+			prvTime = curTime;
+			counter = 0;
+		}
 		// Background color
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clear the back buffer, depth buffer and assign the new color
@@ -150,8 +160,9 @@ int main() {
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		floor.Draw(shaderProgram, camera);
+		bunny.ApplyForce(glm::vec3(0.1f, 0.0f, 0.0f));
+		World.Step(dt);
 		bunny.Instantiate(camera);
-		bunny.Move(glm::vec3(0.0f, -1.0f, 0.0f), 0.01f);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -161,7 +172,6 @@ int main() {
 
 	// Delete objects
 	shaderProgram.Delete();
-	colliderShader.Delete();
 
 	// Destroys window and terminates GLFW
 	glfwDestroyWindow(window);
