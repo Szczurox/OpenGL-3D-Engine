@@ -78,9 +78,6 @@ int main() {
 	// Viewport of OpenGL in the Window
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	// Transparency
-	glEnable(GL_BLEND);
-
 	// Floor textures
 	Texture textures[]{
 		Texture("res/Textures/planks.png", "diffuse", 0),
@@ -89,6 +86,10 @@ int main() {
 
 	// Creates Shader Object using vertices shader and fragment shader
 	Shader shaderProgram("res/Shaders/default.vert", "res/Shaders/default.frag");
+
+	// Enables the Depth Buffer
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	// Floor vertices, indices and textures
 	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
@@ -117,9 +118,6 @@ int main() {
 	Model bunnyModel("res/Models/bunny/scene.gltf");
 	Rigidbody body(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f);
 	Object bunny(shaderProgram, bunnyModel, body);
-
-	// Enables the Depth Buffer
-	glEnable(GL_DEPTH_TEST);
 
 	// Camera
 	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
@@ -169,6 +167,8 @@ int main() {
 		// GLFW events
 		glfwPollEvents();
 	}
+
+	glDisable(GL_BLEND);
 
 	// Delete objects
 	shaderProgram.Delete();
