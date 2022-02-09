@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\Collisions\BoundingSphere.cpp" />
+    <ClCompile Include="src\Physics\Collisions\AABB.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\EBO.cpp" />
@@ -173,6 +175,9 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\Collisions\AABB.hpp" />
+    <ClInclude Include="src\Physics\Collisions\BoundingSphere.hpp" />
+    <ClInclude Include="src\Physics\Collisions\IntersectData.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
     <ClInclude Include="src\Physics\Rigidbody.hpp" />
     <ClInclude Include="src\Model.hpp" />

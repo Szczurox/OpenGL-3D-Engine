@@ -7,7 +7,6 @@
 #include"Model.hpp"
 #include"Physics/PhysicsWorld.hpp"
 
-// Object, allows to combine collider with texture
 class Object {
 	public:
 		// Shaders
@@ -25,8 +24,10 @@ class Object {
 
 		// Object constructors
 		Object() {}; // Empty
-		Object(Shader& shader, Model& objectModel); // Only model
-		Object(Shader& shader, Model& objectModel, Rigidbody& objectRigidbody); // Model with rigidbody
+		Object(Shader& shader, Model& objectModel)
+			: model(objectModel), modelShader(shader) {};  // Only model
+		Object(Shader& shader, Model& objectModel, Rigidbody& objectRigidbody)
+			: model(objectModel), modelShader(shader), rigidbody(objectRigidbody) {}; // Model with Rigidbody
 
 		// Applies force to the object
 		void ApplyForce(glm::vec3 force); 

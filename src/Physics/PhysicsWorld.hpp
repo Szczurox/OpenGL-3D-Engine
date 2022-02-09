@@ -3,20 +3,23 @@
 
 #include"Rigidbody.hpp"
 #include<iostream>
-#include<map>
 #include<vector>
 
 class PhysicsWorld {
 	public:
-		void AddObject(std::string name, Rigidbody* body);
-		void RemoveObject(std::string name);
+		// Adds Rigidbody to Physics World
+		void AddObject(Rigidbody* body);
+		// Removes Rigidbody from Physics World
+		void RemoveObject(Rigidbody* body);
+		// Updates all Physics World objects
 		void Step(GLfloat dt);
+		// Constructor
 		PhysicsWorld() {};
 	
 	private:
-		std::vector<Rigidbody*> m_objects;
-		std::map<std::string, Rigidbody*> rigidbodies;
-		glm::vec3 gravity = glm::vec3(0, 0.0981f, 0);
+		// Vector with all Rigidbodies
+		std::vector<Rigidbody*> rigidbodies;
+		GLfloat gravity = 0.0981f;
 };
 
 #endif

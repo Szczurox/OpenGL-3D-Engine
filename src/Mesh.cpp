@@ -1,7 +1,5 @@
 #include"Mesh.hpp"
 
-Mesh::Mesh() {};
-
 Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures)
 	: vertices(vertices), indices(indices), textures(textures) {
 	calcVAO();

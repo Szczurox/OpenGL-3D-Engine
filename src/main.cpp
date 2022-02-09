@@ -1,5 +1,7 @@
 #include"Object.hpp"
 #include"Physics/PhysicsWorld.hpp"
+#include"Physics/Collisions/BoundingSphere.hpp"
+#include"Physics/Collisions/AABB.hpp"
 
 // Vertices coordinates of a floor
 Vertex vertices[] =
@@ -51,6 +53,7 @@ const unsigned int windowWidth = 800;
 const unsigned int windowHeight = 800;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void collision_test();
 
 int main() {
 	// Initialize GLFW
@@ -122,15 +125,17 @@ int main() {
 	// Camera
 	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
 
+	PhysicsWorld World;
+
+	World.AddObject(&body);
+
 	// variables for calcualting delta time
 	double prvTime = 0.0;
 	double curTime = 0.0;
 	GLfloat dt;
 	unsigned int counter = 0;
 
-	PhysicsWorld World;
-
-	World.AddObject("bunny", &body);
+	collision_test();
 
 	// Main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -145,7 +150,7 @@ int main() {
 			std::string title = "OpenGL - FPS: " + FPS + " / ms: " + ms;
 			glfwSetWindowTitle(window, title.c_str());
 			prvTime = curTime;
-			counter = 0;
+			counter = 0; 
 		}
 		// Background color
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
@@ -185,4 +190,52 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	// On ESC key press close the window
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+}
+
+
+// Tests for collisions
+void collision_test() {
+	std::cout << "Collision Tests" << std::endl << std::endl;
+
+	// Sphere - Sphere
+	BoundingSphere sphere1(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f);
+	BoundingSphere sphere2(glm::vec3(0.0f, 3.0f, 0.0f), 1.0f);
+	BoundingSphere sphere3(glm::vec3(0.0f, 0.0f, 2.0f), 1.0f);
+	BoundingSphere sphere4(glm::vec3(1.0f, 0.0f, 0.0f), 1.0f);
+
+	IntersectData sphere1IntersectSphere2 = sphere1.IntersectBoundingSphere(sphere2);
+	IntersectData sphere1IntersectSphere3 = sphere1.IntersectBoundingSphere(sphere3);
+	IntersectData sphere1IntersectSphere4 = sphere1.IntersectBoundingSphere(sphere4);
+
+	std::cout	<< "Sphere1 intersect Sphere2: " << sphere1IntersectSphere2.isIntersecting
+				<< ", Distance: " << sphere1IntersectSphere2.distance << std::endl;
+	std::cout	<< "Sphere1 intersect Sphere3: " << sphere1IntersectSphere3.isIntersecting
+				<< ", Distance: " << sphere1IntersectSphere3.distance << std::endl;
+	std::cout	<< "Sphere1 intersect Sphere4: " << sphere1IntersectSphere4.isIntersecting
+				<< ", Distance: " << sphere1IntersectSphere4.distance << std::endl;
+
+	std::cout << std::endl;
+	
+	// AABB - AABB
+	AABB aabb1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+	AABB aabb2(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+	AABB aabb3(glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(2.0f, 1.0f, 1.0f));
+	AABB aabb4(glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(1.0f, 1.0f, -1.0f));
+	AABB aabb5(glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(1.0f, 1.5f, 1.0f));
+
+	IntersectData aabb1Intersectaabb2 = aabb1.IntersectAABB(aabb2);
+	IntersectData aabb1Intersectaabb3 = aabb1.IntersectAABB(aabb3);
+	IntersectData aabb1Intersectaabb4 = aabb1.IntersectAABB(aabb4);
+	IntersectData aabb1Intersectaabb5 = aabb1.IntersectAABB(aabb5);
+
+	std::cout	<< "AABB1 intersect AABB2: " << aabb1Intersectaabb2.isIntersecting
+				<< ", Distance: " << aabb1Intersectaabb2.distance << std::endl;
+	std::cout	<< "AABB1 intersect AABB3: " << aabb1Intersectaabb3.isIntersecting
+				<< ", Distance: " << aabb1Intersectaabb3.distance << std::endl;
+	std::cout	<< "AABB1 intersect AABB4: " << aabb1Intersectaabb4.isIntersecting
+				<< ", Distance: " << aabb1Intersectaabb4.distance << std::endl;
+	std::cout	<< "AABB1 intersect AABB5: " << aabb1Intersectaabb5.isIntersecting
+				<< ", Distance: " << aabb1Intersectaabb5.distance << std::endl;
+
+	std::cout << std::endl;
 }

@@ -1,16 +1,18 @@
 #include"Rigidbody.hpp"
-#include<iostream>
-
-Rigidbody::Rigidbody(glm::vec3 pos, GLfloat m, glm::vec3 f, glm::vec3 v)
-	:position(pos), mass(m), force(f), velocity(v) {}
 
 void Rigidbody::ApplyForce(glm::vec3 f) {
 	force += f;
 }
 
+void Rigidbody::ApplyGravity(GLfloat g) {
+	ApplyForce(mass * glm::vec3(0.0f, g, 0.0f));
+}
+
 void Rigidbody::Step(GLfloat dt) {
+	// Changes the acceleration by given forces
 	velocity += force / mass * dt;
+	// Changes the position
 	position += velocity * dt;
-	std::cout << velocity.y << ", " << mass << ", " << std::endl;
+	// Resets net force
 	force = glm::vec3(0.0f);
 }

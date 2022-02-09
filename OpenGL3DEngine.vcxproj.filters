@@ -81,6 +81,12 @@
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\Collisions\AABB.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Collisions\BoundingSphere.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
@@ -140,6 +146,15 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\PhysicsWorld.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Collisions\AABB.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Collisions\BoundingSphere.hpp">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Collisions\IntersectData.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>

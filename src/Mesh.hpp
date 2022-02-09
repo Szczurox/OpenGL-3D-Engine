@@ -18,7 +18,7 @@ class Mesh {
 		VAO VAO;
 
 		// Creates empty mesh
-		Mesh();
+		Mesh() {};
 		// Constructs a mesh using vertices, indices and textures
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 		// Constructs a mesh using vertices and indices (mainly for collider)
