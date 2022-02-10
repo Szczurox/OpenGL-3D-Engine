@@ -1,13 +1,12 @@
 #include"AABB.hpp"
 
-IntersectData AABB::IntersectAABB(AABB& other) {
-	glm::vec3 distances1 = other.minExtents - maxExtents;
-	glm::vec3 distances2 = minExtents - other.maxExtents;
-	glm::vec3 distances = glm::max(distances1, distances2);
-
-	float maxDistance = distances.x;
-	if (distances.y > maxDistance) maxDistance = distances.y;
-	if (distances.z > maxDistance) maxDistance = distances.z;
+IntersectData AABB::CheckIntersection(AABB& other) {
+	// Distances between AABBs on all axis
+	glm::vec3 distance1 = other.minExtents - maxExtents;
+	glm::vec3 distance2 = minExtents - other.maxExtents;
+	// Gets largerst distance
+	glm::vec3 distance = glm::max(distance1, distance2);
+	float maxDistance = std::max(std::max(distance.x, distance.y), distance.z);
 
 	return IntersectData{
 		maxDistance < 0,

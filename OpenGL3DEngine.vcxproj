@@ -154,6 +154,7 @@
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Physics\Collisions\PlaneCollider.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\Rigidbody.cpp" />
     <ClCompile Include="src\shaderClass.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Physics\Collisions\AABB.hpp" />
     <ClInclude Include="src\Physics\Collisions\BoundingSphere.hpp" />
     <ClInclude Include="src\Physics\Collisions\IntersectData.hpp" />
+    <ClInclude Include="src\Physics\Collisions\PlaneCollider.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
     <ClInclude Include="src\Physics\Rigidbody.hpp" />
     <ClInclude Include="src\Model.hpp" />

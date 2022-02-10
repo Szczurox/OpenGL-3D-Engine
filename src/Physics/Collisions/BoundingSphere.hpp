@@ -2,7 +2,6 @@
 #define BOUNDING_SPHERE_CLASS_H
 
 #include"IntersectData.hpp"
-#include<math.h>
 
 class BoundingSphere {
 public:
@@ -14,7 +13,7 @@ public:
 		: center(center), radius(radius) {}
 
 	// Checks if is intersecting another Bounding Sphere
-	IntersectData IntersectBoundingSphere(BoundingSphere& other);
+	IntersectData CheckIntersection(BoundingSphere& other);
 };
 
 #endif

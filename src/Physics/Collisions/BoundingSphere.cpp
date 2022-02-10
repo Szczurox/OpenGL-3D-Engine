@@ -1,8 +1,7 @@
 #include"BoundingSphere.hpp"
-#include<iostream>
 
 // Checks if is intersecting another Bounding Sphere
-IntersectData BoundingSphere::IntersectBoundingSphere(BoundingSphere& other) {
+IntersectData BoundingSphere::CheckIntersection(BoundingSphere& other) {
 	// Length of the sum of the radii of the two spheres
 	float radiusDist = radius + other.radius;
 	// Distans between the centers of two spheres

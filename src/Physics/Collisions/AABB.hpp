@@ -8,10 +8,11 @@ class AABB {
 		glm::vec3 minExtents;
 		glm::vec3 maxExtents;
 
+		// Constructor
 		AABB(glm::vec3 minExtents, glm::vec3 maxExtents)
 			: minExtents(minExtents), maxExtents(maxExtents) {}
 
-		IntersectData IntersectAABB(AABB& other);
+		IntersectData CheckIntersection(AABB& other);
 };
 
 #endif
