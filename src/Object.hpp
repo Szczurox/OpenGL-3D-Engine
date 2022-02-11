@@ -19,13 +19,16 @@ class Object {
 		Rigidbody& rigidbody = emptyRigidbody;
 
 		// Object position
-		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 position = glm::vec3(0.0f);
+		glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+		glm::vec3 scale = glm::vec3(1.0f);
+		GLfloat mass = rigidbody.mass;
 
 
 		// Object constructors
 		Object() {}; // Empty
 		Object(Shader& shader, Model& objectModel)
-			: model(objectModel), modelShader(shader) {};  // Only model
+			: model(objectModel), modelShader(shader) {};  // Only Model
 		Object(Shader& shader, Model& objectModel, Rigidbody& objectRigidbody)
 			: model(objectModel), modelShader(shader), rigidbody(objectRigidbody) {}; // Model with Rigidbody
 

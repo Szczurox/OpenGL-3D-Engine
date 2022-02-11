@@ -20,7 +20,10 @@ Model::Model(const char* file) {
 void Model::Draw(Shader& shader, Camera& camera) {
 	// Goes over all meshes and draw them
 	for (unsigned int i = 0; i < meshes.size(); i++) {
-		meshes[i].Draw(shader, camera, matricesMeshes[i], glm::vec3(position.y, position.x, -position.z), rotation, scale);
+		// If this value is negative, it inverts the y axis of the model
+		matricesMeshes[i][0].y = glm::abs(matricesMeshes[i][0].y);
+		// Converting traditional XYZ to the weird different one to make it work properly
+		meshes[i].Draw(shader, camera, matricesMeshes[i], glm::vec3(-position.y, -position.x, position.z), rotation*transformRotation, scale*transformScale);
 	}
 }
 
@@ -104,9 +107,6 @@ void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix) {
 
 	// Checks if the node contains a mesh and if it does then load it
 	if (node.find("mesh") != node.end()) {
-		translationsMeshes.push_back(translation);
-		rotationsMeshes.push_back(rotation);
-		scalesMeshes.push_back(scale);
 		matricesMeshes.push_back(matNextNode);
 
 		loadMesh(node["mesh"]);

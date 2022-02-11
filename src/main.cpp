@@ -119,20 +119,25 @@ int main() {
 	// Exports the Light Position to the Floor Fragment Shader for lighting
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-	Model bunnyModel("res/Models/bunny/scene.gltf");
-	Rigidbody body(glm::vec3(0.0f, 0.0f, 0.0f), 1.0f);
-	Object bunny(shaderProgram, bunnyModel, body);
+	Model model("res/Models/bunny/scene.gltf");
+	Rigidbody body(glm::vec3(0.0f), 1.0f);
+	Object object(shaderProgram, model, body);
+
+	object.position = glm::vec3(0.0f);
+	object.rotation = glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	object.scale = glm::vec3(0.5f);
+	object.mass = 2.0f;
 
 	// Camera
 	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
 
-	PhysicsWorld World;
+	PhysicsWorld world;
 
-	World.AddObject(&body);
+	world.AddObject(&body);
 
 	// variables for calcualting delta time
-	double prvTime = 0.0;
-	double curTime = 0.0;
+	float prvTime = 0.0f;
+	float curTime = 0.0f;
 	GLfloat dt;
 	unsigned int counter = 0;
 
@@ -164,9 +169,9 @@ int main() {
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		floor.Draw(shaderProgram, camera);
-		bunny.ApplyForce(glm::vec3(0.1f, 0.0f, 0.0f));
-		World.Step(dt);
-		bunny.Instantiate(camera);
+		object.ApplyForce(glm::vec3(0.0f, 0.0f, 0.1f));
+		world.Step(dt);
+		object.Instantiate(camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);

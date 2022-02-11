@@ -19,7 +19,7 @@ class PhysicsWorld {
 	private:
 		// Vector with all Rigidbodies
 		std::vector<Rigidbody*> rigidbodies;
-		GLfloat gravity = 0.0981f;
+		GLfloat gravity = -0.0981f;
 };
 
 #endif

@@ -14,6 +14,9 @@ class Model {
 		glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 		glm::vec3 scale = glm::vec3(1.0f);
 
+		glm::vec3 transformScale = scale;
+		glm::quat transformRotation = rotation;
+
 		// Empty model
 		Model();
 
@@ -30,9 +33,6 @@ class Model {
 
 		// Meshes and transformations
 		std::vector<Mesh> meshes;
-		std::vector<glm::vec3> translationsMeshes;
-		std::vector<glm::quat> rotationsMeshes;
-		std::vector<glm::vec3> scalesMeshes;
 		std::vector<glm::mat4> matricesMeshes;
 
 		// Prevents textures from being loaded twice
