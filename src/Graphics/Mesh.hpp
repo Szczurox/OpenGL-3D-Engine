@@ -4,8 +4,8 @@
 #include<string>
 #include<vector>
 
-#include"VAO.hpp"
-#include"EBO.hpp"
+#include"Utils/VAO.hpp"
+#include"Utils/EBO.hpp"
 #include"Camera.hpp"
 #include"Texture.hpp"
 

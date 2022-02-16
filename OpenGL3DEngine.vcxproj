@@ -145,23 +145,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Physics\Collisions\BoundingSphere.cpp" />
-    <ClCompile Include="src\Physics\Collisions\AABB.cpp" />
+    <ClCompile Include="src\Shapes\AABB.cpp" />
+    <ClCompile Include="src\Shapes\Line.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\EBO.cpp" />
+    <ClCompile Include="src\Graphics\Camera.cpp" />
+    <ClCompile Include="src\Graphics\Utils\EBO.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\Graphics\Mesh.cpp" />
+    <ClCompile Include="src\Graphics\Model.cpp" />
     <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Physics\Collisions\PlaneCollider.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\Rigidbody.cpp" />
-    <ClCompile Include="src\shaderClass.cpp" />
+    <ClCompile Include="src\Graphics\shaderClass.cpp" />
+    <ClCompile Include="src\Shapes\Plane.cpp" />
+    <ClCompile Include="src\Shapes\Triangle.hpp" />
     <ClCompile Include="src\stb.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\VAO.cpp" />
-    <ClCompile Include="src\VBO.cpp" />
+    <ClCompile Include="src\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Graphics\Utils\VAO.cpp" />
+    <ClCompile Include="src\Graphics\Utils\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Models\bunny\baseColor.png" />
@@ -176,21 +177,23 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Physics\Collisions\AABB.hpp" />
-    <ClInclude Include="src\Physics\Collisions\BoundingSphere.hpp" />
-    <ClInclude Include="src\Physics\Collisions\IntersectData.hpp" />
-    <ClInclude Include="src\Physics\Collisions\PlaneCollider.hpp" />
+    <ClInclude Include="src\Shapes\AABB.hpp" />
+    <ClInclude Include="src\Shapes\Line.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
     <ClInclude Include="src\Physics\Rigidbody.hpp" />
-    <ClInclude Include="src\Model.hpp" />
+    <ClInclude Include="src\Graphics\Model.hpp" />
     <ClInclude Include="src\Object.hpp" />
-    <ClInclude Include="src\Camera.hpp" />
-    <ClInclude Include="src\EBO.hpp" />
-    <ClInclude Include="src\Mesh.hpp" />
-    <ClInclude Include="src\shaderClass.hpp" />
-    <ClInclude Include="src\Texture.hpp" />
-    <ClInclude Include="src\VAO.hpp" />
-    <ClInclude Include="src\VBO.hpp" />
+    <ClInclude Include="src\Graphics\Camera.hpp" />
+    <ClInclude Include="src\Graphics\Utils\EBO.hpp" />
+    <ClInclude Include="src\Graphics\Mesh.hpp" />
+    <ClInclude Include="src\Graphics\shaderClass.hpp" />
+    <ClInclude Include="src\Graphics\Texture.hpp" />
+    <ClInclude Include="src\Graphics\Utils\VAO.hpp" />
+    <ClInclude Include="src\Graphics\Utils\VBO.hpp" />
+    <ClInclude Include="src\Shapes\OBB.hpp" />
+    <ClInclude Include="src\Shapes\Plane.hpp" />
+    <ClInclude Include="src\Shapes\Ray.hpp" />
+    <ClInclude Include="src\Shapes\Sphere.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Models\bunny\scene.bin" />

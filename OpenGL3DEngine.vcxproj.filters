@@ -42,37 +42,37 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
+    <ClCompile Include="src\Graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EBO.cpp">
+    <ClCompile Include="src\Graphics\Utils\EBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mesh.cpp">
+    <ClCompile Include="src\Graphics\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\shaderClass.cpp">
+    <ClCompile Include="src\Graphics\shaderClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
+    <ClCompile Include="src\Graphics\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VAO.cpp">
+    <ClCompile Include="src\Graphics\Utils\VAO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VBO.cpp">
+    <ClCompile Include="src\Graphics\Utils\VBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Model.cpp">
+    <ClCompile Include="src\Graphics\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\Rigidbody.cpp">
@@ -81,14 +81,17 @@
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Collisions\AABB.cpp">
-      <Filter>Source Files\Physics</Filter>
+    <ClCompile Include="src\Shapes\Line.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Collisions\BoundingSphere.cpp">
-      <Filter>Source Files\Physics</Filter>
+    <ClCompile Include="src\Shapes\AABB.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Collisions\PlaneCollider.cpp">
-      <Filter>Source Files\Physics</Filter>
+    <ClCompile Include="src\Shapes\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shapes\Triangle.hpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,31 +121,31 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Camera.hpp">
+    <ClInclude Include="src\Graphics\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EBO.hpp">
+    <ClInclude Include="src\Graphics\Utils\EBO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mesh.hpp">
+    <ClInclude Include="src\Graphics\Mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\shaderClass.hpp">
+    <ClInclude Include="src\Graphics\shaderClass.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Texture.hpp">
+    <ClInclude Include="src\Graphics\Texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VAO.hpp">
+    <ClInclude Include="src\Graphics\Utils\VAO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\VBO.hpp">
+    <ClInclude Include="src\Graphics\Utils\VBO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Model.hpp">
+    <ClInclude Include="src\Graphics\Model.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\Rigidbody.hpp">
@@ -151,17 +154,23 @@
     <ClInclude Include="src\Physics\PhysicsWorld.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Collisions\AABB.hpp">
-      <Filter>Header Files\Physics</Filter>
+    <ClInclude Include="src\Shapes\Line.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Collisions\BoundingSphere.hpp">
-      <Filter>Header Files\Physics</Filter>
+    <ClInclude Include="src\Shapes\Ray.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Collisions\IntersectData.hpp">
-      <Filter>Header Files\Physics</Filter>
+    <ClInclude Include="src\Shapes\Sphere.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Collisions\PlaneCollider.hpp">
-      <Filter>Header Files\Physics</Filter>
+    <ClInclude Include="src\Shapes\AABB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shapes\OBB.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shapes\Plane.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

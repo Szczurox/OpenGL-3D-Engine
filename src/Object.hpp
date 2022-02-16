@@ -4,7 +4,7 @@
 #include<string>
 #include<vector>
 
-#include"Model.hpp"
+#include"Graphics/Model.hpp"
 #include"Physics/PhysicsWorld.hpp"
 
 class Object {
