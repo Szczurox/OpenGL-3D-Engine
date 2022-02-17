@@ -24,12 +24,12 @@ class Camera {
 		int height;
 
 		// Adjust camera speed and sensitivity
-		float speed = 0.1f;
+		float speed = 3.0f;
 		float sensitivity = 100.0f;
 
 		// Normal speed and sprint speed (while pressing shift)
-		const float sprint = 0.1f;
-		const float normalSpeed = 0.04f;
+		const float sprint = 8.0f;
+		const float normalSpeed = 3.0f;
 
 		// Prevents camera from jumping around when clicking the left click in the window for the first time
 		bool firstClick = true;
@@ -41,7 +41,7 @@ class Camera {
 		// Exports camera matrix to the Vertex Shader
 		void Matrix(Shader& shader, const char* uniform);
 		// Handles camera input
-		void Inputs(GLFWwindow* window);
+		void Inputs(GLFWwindow* window, float dt);
 };
 
 #endif

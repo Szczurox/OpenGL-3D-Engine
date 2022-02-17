@@ -1,5 +1,6 @@
 #include"Object.hpp"
 #include"Physics/PhysicsWorld.hpp"
+#include"Physics/ShapeIntersection.hpp"
 
 // Vertices coordinates of a floor
 Vertex vertices[] =
@@ -51,6 +52,7 @@ const unsigned int windowWidth = 800;
 const unsigned int windowHeight = 800;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void test();
 
 int main() {
 	// Initialize GLFW
@@ -86,10 +88,14 @@ int main() {
 
 	// Creates Shader Object using vertices shader and fragment shader
 	Shader shaderProgram("res/Shaders/default.vert", "res/Shaders/default.frag");
+	Shader outliningProgram("res/Shaders/outlining.vert", "res/Shaders/outlining.frag");
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	// Enables the Stencil Buffer
+	glEnable(GL_STENCIL_TEST);
+	// Sets rules for outcomes of stecil tests
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	// Floor vertices, indices and textures
 	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
@@ -115,17 +121,18 @@ int main() {
 	// Exports the Light Position to the Floor Fragment Shader for lighting
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-	Model model("res/Models/bunny/scene.gltf");
+	Model model("res/Models/sword/scene.gltf");
 	Rigidbody body(glm::vec3(0.0f), 1.0f);
 	Object object(shaderProgram, model, body);
 
+	object.modelPosition = glm::vec3(0.0f, 1.0f, 0.0f);
 	object.position = glm::vec3(0.0f);
-	object.rotation = glm::angleAxis(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	object.scale = glm::vec3(0.5f);
+	object.rotation = glm::angleAxis(glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	object.scale = glm::vec3(0.009f);
 	object.mass = 2.0f;
 
 	// Camera
-	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 0.0f, 2.0f));
+	Camera camera(windowWidth, windowHeight, glm::vec3(0.0f, 2.0f, 2.0f));
 
 	PhysicsWorld world;
 
@@ -134,8 +141,10 @@ int main() {
 	// variables for calcualting delta time
 	float prvTime = 0.0f;
 	float curTime = 0.0f;
-	GLfloat dt;
+	float dt;
 	unsigned int counter = 0;
+
+	test();
 
 	// Main loop
 	while (!glfwWindowShouldClose(window)) {
@@ -143,37 +152,45 @@ int main() {
 		curTime = glfwGetTime();
 		dt = curTime - prvTime;
 		counter++;
-		if (dt >= 1.0 / 30.0) {
-			// Setting current title to the new title with new FPS value
-			std::string FPS = std::to_string((1.0 / dt) * counter);
-			std::string ms = std::to_string((dt / counter) * 1000);
-			std::string title = "OpenGL - FPS: " + FPS + " / ms: " + ms;
-			glfwSetWindowTitle(window, title.c_str());
-			prvTime = curTime;
-			counter = 0; 
-		}
+		// Setting current title to the new title with new FPS value
+		std::string FPS = std::to_string((1.0 / dt) * counter);
+		std::string ms = std::to_string((dt / counter) * 1000);
+		std::string title = "OpenGL - FPS: " + FPS + " / ms: " + ms;
+		glfwSetWindowTitle(window, title.c_str());
+		counter = 0;
+		prvTime = curTime;
 		// Background color
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clear the back buffer, depth buffer and assign the new color
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// Clear the back buffer, depth buffer, stencil buffer and assign the new color
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		// Get user inputs and adjust camera 
-		camera.Inputs(window);
+		camera.Inputs(window, dt);
 		// Updates camera
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		floor.Draw(shaderProgram, camera);
-		object.ApplyForce(glm::vec3(0.0f, 0.0f, 0.1f));
 		world.Step(dt);
+
+		// Make it so the stencil test always passes
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		// Enable modifying of the stencil buffer
+		glStencilMask(0xFF);
 		object.Instantiate(camera);
+
+		// Enable modifying of the stencil buffer
+		glStencilMask(0xFF);
+		// Clear stencil buffer
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		// Enable the depth buffer
+		glEnable(GL_DEPTH_TEST);
+
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// GLFW events
 		glfwPollEvents();
 	}
-
-	glDisable(GL_BLEND);
 
 	// Delete objects
 	shaderProgram.Delete();
@@ -190,4 +207,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	// On ESC key press close the window
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+}
+
+void test() {
+	std::cout << "Intersection tests: \n";
+	AABB aabb1(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f));
+	AABB aabb2(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(2.0f));
+	AABB aabb3(glm::vec3(1.0f), glm::vec3(5.0f));
+	AABB aabb4(glm::vec3(20.0f), glm::vec3(10.0f));
+	std::cout << "aabb1 vs aabb2: " << CheckIntersection(aabb1, aabb2) << std::endl;
+	std::cout << "aabb1 vs aabb3: " << CheckIntersection(aabb1, aabb3) << std::endl;
+	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl;
 }

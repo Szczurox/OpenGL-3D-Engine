@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Physics">
       <UniqueIdentifier>{6769c3e9-cd37-46d5-a204-3cc626fc5c53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Models\crow">
+      <UniqueIdentifier>{bfbb4398-cf55-4b14-a489-705abea62080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Models\crow\textures">
+      <UniqueIdentifier>{202298a2-e506-4a3a-8725-786a8053f645}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -87,10 +93,16 @@
     <ClCompile Include="src\Shapes\AABB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shapes\Plane.cpp">
+    <ClCompile Include="src\Shapes\Triangle.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shapes\Triangle.hpp">
+    <ClCompile Include="src\Physics\PointTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\ShapeIntersections.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shapes\Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,6 +127,9 @@
     </Image>
     <Image Include="res\Models\sword\textures\Object001_mtl_baseColor.jpeg">
       <Filter>Resource Files\Models\sword\textures</Filter>
+    </Image>
+    <Image Include="res\Models\crow\textures\diffuse.png">
+      <Filter>Resource Files\Models\crow\textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +187,12 @@
     <ClInclude Include="src\Shapes\Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Physics\PointTests.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\ShapeIntersection.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\default.frag">
@@ -197,6 +218,18 @@
     </None>
     <None Include="res\Models\sword\scene.gltf">
       <Filter>Resource Files\Models\sword</Filter>
+    </None>
+    <None Include="res\Models\crow\scene.gltf">
+      <Filter>Resource Files\Models\crow</Filter>
+    </None>
+    <None Include="res\Shaders\outlining.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Shaders\outlining.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Models\crow\scene.bin">
+      <Filter>Resource Files\Models\crow</Filter>
     </None>
   </ItemGroup>
 </Project>

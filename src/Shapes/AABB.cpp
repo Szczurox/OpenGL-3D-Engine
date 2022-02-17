@@ -17,3 +17,7 @@ glm::vec3 AABB::GetMax() {
 					 fmaxf(p1.y, p2.y),
 					 fmaxf(p1.z, p2.z));
 }
+
+AABB AABBFromMinMax(glm::vec3 min, glm::vec3 max) {
+	return AABB((min + max) * 0.5f, (max - min) * 0.5f);
+}

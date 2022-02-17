@@ -10,10 +10,11 @@ public:
 
 	// Constructors
 	Ray() : direction(0.0f, 0.0f, 1.0f), origin(0.0f) {} // Empty
-	Ray(const glm::vec3 o, const glm::vec3 d) 
+	Ray(glm::vec3 o, glm::vec3 d) 
 		: origin(o), direction(glm::normalize(d)) {}; // From origin and direction
-	Ray(const glm::vec3 from, const glm::vec3 to) 
-		: origin(from), direction(glm::normalize(to - from)) {}; // From 2 points
 };
+
+// Creates ray from 2 points
+Ray RayFromPoints(glm::vec3 from, glm::vec3 to);
 
 #endif

@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\PointTests.cpp" />
+    <ClCompile Include="src\Physics\ShapeIntersections.cpp" />
     <ClCompile Include="src\Shapes\AABB.cpp" />
     <ClCompile Include="src\Shapes\Line.cpp" />
     <ClCompile Include="glad.c" />
@@ -157,7 +159,7 @@
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\Rigidbody.cpp" />
     <ClCompile Include="src\Graphics\shaderClass.cpp" />
-    <ClCompile Include="src\Shapes\Plane.cpp" />
+    <ClCompile Include="src\Shapes\Ray.cpp" />
     <ClCompile Include="src\Shapes\Triangle.hpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
@@ -167,6 +169,7 @@
   <ItemGroup>
     <Image Include="res\Models\bunny\baseColor.png" />
     <Image Include="res\Models\bunny\metallicRoughness.png" />
+    <Image Include="res\Models\crow\textures\diffuse.png" />
     <Image Include="res\Models\sword\textures\Object001_mtl_baseColor.jpeg" />
     <Image Include="res\Textures\obama.png" />
     <Image Include="res\Textures\planks.png" />
@@ -177,6 +180,8 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\PointTests.hpp" />
+    <ClInclude Include="src\Physics\ShapeIntersection.hpp" />
     <ClInclude Include="src\Shapes\AABB.hpp" />
     <ClInclude Include="src\Shapes\Line.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
@@ -198,12 +203,16 @@
   <ItemGroup>
     <None Include="res\Models\bunny\scene.bin" />
     <None Include="res\Models\bunny\scene.gltf" />
+    <None Include="res\Models\crow\scene.bin" />
+    <None Include="res\Models\crow\scene.gltf" />
     <None Include="res\Models\sword\scene.bin" />
     <None Include="res\Models\sword\scene.gltf" />
     <None Include="res\Shaders\default.frag" />
     <None Include="res\Shaders\default.vert" />
     <None Include="res\Shaders\collider.frag" />
     <None Include="res\Shaders\collider.vert" />
+    <None Include="res\Shaders\outlining.frag" />
+    <None Include="res\Shaders\outlining.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

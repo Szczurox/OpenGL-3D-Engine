@@ -10,14 +10,14 @@ public:
 
 	// Constructors
 	AABB() : position(0.0f), size(1.0f) {} // Empty
-	AABB(const glm::vec3 o, const glm::vec3 s) : position(o), size(s) {} // From position and size
-	AABB(const glm::vec3 min, const glm::vec3 max) :
-		position((min + max) * 0.5f), size((max - min) * 0.5f) {}; // From min and max
+	AABB(glm::vec3 pos, glm::vec3 s) : position(pos), size(s) {} // From position and size
 
 	// Minimum point of AABB
 	glm::vec3 GetMin();
 	// Maximum point of AABB
 	glm::vec3 GetMax();
 };
+
+AABB AABBFromMinMax(glm::vec3 min, glm::vec3 max);
 
 #endif 
