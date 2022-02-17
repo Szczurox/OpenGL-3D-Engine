@@ -30,10 +30,24 @@ Interval GetInterval(AABB& aabb, glm::vec3 axis);
 Interval GetInterval(OBB& obb, glm::vec3 axis);
 // Checks if is overlaping on an axis
 bool OverlapOnAxis(AABB& aabb, OBB& obb, glm::vec3 axis);
+bool OverlapOnAxis(OBB& obb1, OBB& obb2, glm::vec3 axis);
 
 // AABB vs OBB
 bool CheckIntersection(AABB& aabb, OBB& obb);
 inline bool CheckIntersection(OBB& obb, AABB& aabb);
 
+// AABB vs Plane
+bool CheckIntersection(AABB& aabb, Plane& plane);
+inline bool CheckIntersection(Plane& plane, AABB& aabb);
+
+// OBB vs OBB
+bool CheckIntersection(OBB& obb1, OBB& obb2);
+
+// OBB vs Plane
+bool CheckIntersection(OBB& obb, Plane& plane);
+inline bool CheckIntersection(Plane& plane, OBB& obb);
+
+// Plane vs Plane
+bool CheckIntersection(Plane& p1, Plane& p2);
 
 #endif

@@ -123,7 +123,7 @@ Interval GetInterval(OBB& obb, glm::vec3 axis) {
 	Interval result;
 	result.min = result.max = glm::dot(axis, vertices[0]);
 	// Project each vertex onto the provided axes
-	for (int i = 1; i < 8; ++i) {
+	for (int i = 1; i < 8; i++) {
 		float projection = glm::dot(axis, vertices[i]);
 		result.min = (projection < result.min) ? projection : result.min;
 		result.max = (projection > result.max) ? projection : result.max;
@@ -136,6 +136,12 @@ Interval GetInterval(OBB& obb, glm::vec3 axis) {
 bool OverlapOnAxis(AABB& aabb, OBB& obb, glm::vec3 axis) {
 	Interval a = GetInterval(aabb, axis);
 	Interval b = GetInterval(obb, axis);
+	return ((b.min <= a.max) && (a.min <= b.max));
+}
+
+bool OverlapOnAxis(OBB& obb1, OBB& obb2, glm::vec3 axis) {
+	Interval a = GetInterval(obb1, axis);
+	Interval b = GetInterval(obb2, axis);
 	return ((b.min <= a.max) && (a.min <= b.max));
 }
 
@@ -169,7 +175,6 @@ bool CheckIntersection(AABB& aabb, OBB& obb) {
 			return false;
 		}
 	}
-
 	// Seperating axis not found
 	return true; 
 }
@@ -177,4 +182,84 @@ bool CheckIntersection(AABB& aabb, OBB& obb) {
 // OBB vs AABB intersection
 inline bool CheckIntersection(OBB& obb, AABB& aabb) {
 	return CheckIntersection(aabb, obb);
+}
+
+// AABB vs Plane intersection
+bool CheckIntersection(AABB& aabb, Plane& plane) {
+	// Project half extemts of AABB onto the plane
+	float pLen = aabb.size.x * fabsf(plane.normal.x) +
+				 aabb.size.y * fabsf(plane.normal.y) +
+				 aabb.size.z * fabsf(plane.normal.z);
+	// Distance from the center of the AABB to the plane
+	float dot = glm::dot(plane.normal, aabb.position);
+	float dist = dot - plane.distance;
+	// Intersection occurs if the distance falls within the projected side
+	return fabsf(dist) <= pLen;
+}
+
+// Plane vs AABB intersection
+inline bool CheckIntersection(Plane& plane, AABB& aabb) {
+	return CheckIntersection(aabb, plane);
+}
+
+// OBB vs OBB intersection
+bool CheckIntersection(OBB& obb1, OBB& obb2) {
+	// OBBs orientation
+	glm::mat3 o1 = obb1.orientation;
+	glm::mat3 o2 = obb2.orientation;
+
+	glm::vec3 axes[15] = {
+		glm::vec3(o1[0].x, o1[0].y, o1[0].z),
+		glm::vec3(o1[1].x, o1[1].y, o1[1].z),
+		glm::vec3(o1[2].x, o1[2].y, o1[2].z),
+		glm::vec3(o2[0].x, o2[0].y, o2[0].z),
+		glm::vec3(o2[1].x, o2[1].y, o2[1].z),
+		glm::vec3(o2[2].x, o2[2].y, o2[2].z)
+	};
+	// Get remaining axes
+	for (int i = 0; i < 3; i++) { 
+		axes[6 + i * 3 + 0] = glm::cross(axes[i], axes[0]);
+		axes[6 + i * 3 + 1] = glm::cross(axes[i], axes[1]);
+		axes[6 + i * 3 + 2] = glm::cross(axes[i], axes[2]);
+	}
+
+	// Checking if separatian axes overlap, if all overlap then the intersection occurs
+	for (int i = 0; i < 15; i++) {
+		if (!OverlapOnAxis(obb1, obb2, axes[i])) {
+			// Separating axis found
+			return false;
+		}
+	}
+	// Separating axis not found
+	return true;
+}
+
+// OBB vs Plane intersection
+bool CheckIntersection(OBB& obb, Plane& plane) {
+	// OBB orientation
+	glm::mat3 o = obb.orientation;
+	glm::vec3 normal = plane.normal;
+	// Project half extemts of OBB onto the plane
+	float pLen = obb.size.x * fabsf(glm::dot(normal, o[0])) +
+				 obb.size.y * fabsf(glm::dot(normal, o[1])) +
+				 obb.size.z * fabsf(glm::dot(normal, o[2]));
+	// Distance from the center of the OBB to the plane
+	float dot = glm::dot(plane.normal, obb.position);
+	float dist = dot - plane.distance;
+	// Intersection occurs if the distance falls within the projected side
+	return fabsf(dist) <= pLen;
+}
+
+// Plane vs OBB intersection
+inline bool CheckIntersection(Plane& plane, OBB& obb) {
+	return CheckIntersection(obb, plane);
+}
+
+// Plane vs Plane
+bool CheckIntersection(Plane& p1, Plane& p2) {
+	// Direction of the intersection line
+	glm::vec3 dir = glm::cross(p1.normal, p2.normal);
+	// Check the length of this new vector
+	// if it is 0, the planes are parallel
+	return !ET(MagnitudeSq(dir), 0.0f);
 }

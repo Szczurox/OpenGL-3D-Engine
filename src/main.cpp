@@ -211,11 +211,21 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void test() {
 	std::cout << "Intersection tests: \n";
-	AABB aabb1(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f));
+	AABB aabb1(glm::vec3(0.0f), glm::vec3(1.0f));
 	AABB aabb2(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(2.0f));
 	AABB aabb3(glm::vec3(1.0f), glm::vec3(5.0f));
 	AABB aabb4(glm::vec3(20.0f), glm::vec3(10.0f));
 	std::cout << "aabb1 vs aabb2: " << CheckIntersection(aabb1, aabb2) << std::endl;
 	std::cout << "aabb1 vs aabb3: " << CheckIntersection(aabb1, aabb3) << std::endl;
-	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl;
+	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl << std::endl;
+
+	OBB obb1;
+	OBB obb2(glm::vec3(0.0f, -1.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 0.0f, 0.1f, 0.0f }, { 0.0f, 0.1f, 0.0f }, { 0.0f, 0.1f, 0.0f }));
+	OBB obb3(glm::vec3(0.0f, -3.2f, 0.0f), glm::vec3(2.0f));
+	std::cout << "aabb1 vs obb1: " << CheckIntersection(aabb1, obb1) << std::endl;
+	std::cout << "aabb1 vs obb2: " << CheckIntersection(aabb1, obb2) << std::endl;
+	std::cout << "aabb1 vs obb3: " << CheckIntersection(aabb1, obb3) << std::endl << std::endl;
+
+	std::cout << "obb1 vs obb2: " << CheckIntersection(obb1, obb2) << std::endl;
+	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl;
 }
