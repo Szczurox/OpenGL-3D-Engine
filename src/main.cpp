@@ -1,6 +1,7 @@
 #include"Object.hpp"
 #include"Physics/PhysicsWorld.hpp"
-#include"Physics/ShapeIntersection.hpp"
+#include"Physics/ShapeIntersections.hpp"
+#include"Physics/LineIntersections.hpp"
 
 // Vertices coordinates of a floor
 Vertex vertices[] =
@@ -88,7 +89,6 @@ int main() {
 
 	// Creates Shader Object using vertices shader and fragment shader
 	Shader shaderProgram("res/Shaders/default.vert", "res/Shaders/default.frag");
-	Shader outliningProgram("res/Shaders/outlining.vert", "res/Shaders/outlining.frag");
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -211,21 +211,42 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void test() {
 	std::cout << "Intersection tests: \n";
-	AABB aabb1(glm::vec3(0.0f), glm::vec3(1.0f));
+	Sphere sphere1(glm::vec3(0.0f), 1.0f);
+	Sphere sphere2(glm::vec3(10.0f), 3.0f);
+	Sphere sphere3(glm::vec3(0.0f, -1.0f, 0.0f), 1.0f);
+	std::cout << "sphere1 vs sphere2: " << CheckIntersection(sphere1, sphere2) << std::endl;
+	std::cout << "sphere1 vs sphere3: " << CheckIntersection(sphere1, sphere3) << std::endl << std::endl;
+
+	AABB aabb1(glm::vec3(0.0f), glm::vec3(2.0f));
 	AABB aabb2(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(2.0f));
 	AABB aabb3(glm::vec3(1.0f), glm::vec3(5.0f));
-	AABB aabb4(glm::vec3(20.0f), glm::vec3(10.0f));
+	AABB aabb4(glm::vec3(0.0f, -10.0f, 0.0f), glm::vec3(1.0f));
 	std::cout << "aabb1 vs aabb2: " << CheckIntersection(aabb1, aabb2) << std::endl;
 	std::cout << "aabb1 vs aabb3: " << CheckIntersection(aabb1, aabb3) << std::endl;
 	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl << std::endl;
 
 	OBB obb1;
-	OBB obb2(glm::vec3(0.0f, -1.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 0.0f, 0.1f, 0.0f }, { 0.0f, 0.1f, 0.0f }, { 0.0f, 0.1f, 0.0f }));
-	OBB obb3(glm::vec3(0.0f, -3.2f, 0.0f), glm::vec3(2.0f));
+	OBB obb2(glm::vec3(0.0f, -3.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }));
+	OBB obb3(glm::vec3(3.2f), glm::vec3(2.0f));
 	std::cout << "aabb1 vs obb1: " << CheckIntersection(aabb1, obb1) << std::endl;
 	std::cout << "aabb1 vs obb2: " << CheckIntersection(aabb1, obb2) << std::endl;
 	std::cout << "aabb1 vs obb3: " << CheckIntersection(aabb1, obb3) << std::endl << std::endl;
 
 	std::cout << "obb1 vs obb2: " << CheckIntersection(obb1, obb2) << std::endl;
-	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl;
+	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl;
+
+	std::cout << "Ray tests: \n";
+	Ray ray1(glm::vec3(0.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+	std::cout << "ray1 vs sphere1: " << Raycast(sphere1, ray1) << std::endl;
+	std::cout << "ray1 vs sphere2: " << Raycast(sphere2, ray1) << std::endl;
+	std::cout << "ray1 vs sphere3: " << Raycast(sphere3, ray1) << std::endl << std::endl;
+
+	std::cout << "ray1 vs aabb1: " << Raycast(aabb1, ray1) << std::endl;
+	std::cout << "ray1 vs aabb2: " << Raycast(aabb2, ray1) << std::endl;
+	std::cout << "ray1 vs aabb3: " << Raycast(aabb3, ray1) << std::endl;
+	std::cout << "ray1 vs aabb4: " << Raycast(aabb4, ray1) << std::endl << std::endl;
+
+	std::cout << "ray1 vs obb1: " << Raycast(obb1, ray1) << std::endl;
+	std::cout << "ray1 vs obb2: " << Raycast(obb2, ray1) << std::endl;
+	std::cout << "ray1 vs obb3: " << Raycast(obb3, ray1) << std::endl << std::endl;
 }

@@ -11,6 +11,10 @@
 #define ET(x, y) \
 	(fabsf((x)-(y)) <= FLT_EPSILON * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y))))
 
+// Squares vector
+#define MagnitudeSq(x) \
+	(glm::dot(x, x))
+
 // Sphere
 bool PointInSphere(glm::vec3 point, Sphere& sphere);
 glm::vec3 ClosestPoint(Sphere& sphere, glm::vec3 point);

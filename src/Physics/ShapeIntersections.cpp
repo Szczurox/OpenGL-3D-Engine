@@ -1,4 +1,4 @@
-#include"ShapeIntersection.hpp"
+#include"ShapeIntersections.hpp"
 
 // Sphere vs Sphere intersection
 bool CheckIntersection(Sphere& s1, Sphere& s2) {

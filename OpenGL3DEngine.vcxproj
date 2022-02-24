@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\LineIntersections.cpp" />
     <ClCompile Include="src\Physics\PointTests.cpp" />
     <ClCompile Include="src\Physics\ShapeIntersections.cpp" />
     <ClCompile Include="src\Shapes\AABB.cpp" />
@@ -180,8 +181,9 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\LineIntersections.hpp" />
     <ClInclude Include="src\Physics\PointTests.hpp" />
-    <ClInclude Include="src\Physics\ShapeIntersection.hpp" />
+    <ClInclude Include="src\Physics\ShapeIntersections.hpp" />
     <ClInclude Include="src\Shapes\AABB.hpp" />
     <ClInclude Include="src\Shapes\Line.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />

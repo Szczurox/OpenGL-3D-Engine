@@ -105,6 +105,9 @@
     <ClCompile Include="src\Shapes\Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\LineIntersections.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Textures\pop_cat.png">
@@ -190,7 +193,10 @@
     <ClInclude Include="src\Physics\PointTests.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\ShapeIntersection.hpp">
+    <ClInclude Include="src\Physics\ShapeIntersections.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\LineIntersections.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
