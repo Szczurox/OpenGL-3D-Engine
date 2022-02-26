@@ -128,3 +128,49 @@ float Raycast(Plane& plane, Ray& ray) {
 	// Intersecting
 	return t;
 }
+
+// Linetest Sphere
+bool Linetest(Sphere& sphere, Line& line) {
+	// Closest point to the center of the sphere along the line segment
+	glm::vec3 closest = ClosestPoint(line, sphere.position);
+	// Squared distance between the closest point and the center of the sphere
+	float distSq = MagnitudeSq(sphere.position - closest);
+	// If the distance is less than the magnitude, intersection occurs
+	return distSq <= (sphere.radius * sphere.radius);
+}
+
+// Linetest AABB
+bool Linetest(AABB& aabb, Line& line) {
+	// Raycast AABB
+	Ray ray;
+	ray.origin = line.start;
+	ray.direction = glm::normalize(line.end - line.start);
+	float t = Raycast(aabb, ray);
+	// If t is less than the length of the line, the segment intersects the AABBs
+	return t >= 0 && t * t <= MagnitudeSq(line.end - line.start);
+}
+
+// Linetest OBB
+bool Linetest(OBB& obb, Line& line) {
+	// Raycast AABB
+	Ray ray;
+	ray.origin = line.start;
+	ray.direction = glm::normalize(line.end - line.start);
+	float t = Raycast(obb, ray);
+	// If t is less than the length of the line, the segment intersects the AABBs
+	return t >= 0 && t * t <= MagnitudeSq(line.end - line.start);
+}
+
+// Linetest Plane
+bool Linetest(const Plane& plane, const Line& line) {
+	// t = (plane distance * A) / (plane normal * (B - A))
+	glm::vec3 ab = line.end - line.start;
+	float nA = glm::dot(plane.normal, line.start);
+	float nAB = glm::dot(plane.normal, ab);
+	// If the line and plane are parallel, nAB will be 0
+	// In this case we have to set it to some small number, but not 0 to prevent an exception
+	if (!nAB) nAB = 0.0000001;
+	float t = (plane.distance - nA) / nAB;
+	// Plane and Line intersect if the value of t falls within the 0 to 1 range
+	return t >= 0.0f && t <= 1.0f;
+}

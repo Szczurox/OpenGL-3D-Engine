@@ -2,8 +2,8 @@
 #define LINE_CLASS_H
 
 #include<glm/glm.hpp>
-#include <cmath>
-#include <cfloat>
+#include<cmath>
+#include<cfloat>
 
 class Line {
 public:

@@ -54,6 +54,9 @@ const unsigned int windowHeight = 800;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void test();
+void intersection_tests();
+void ray_tests();
+void line_tests();
 
 int main() {
 	// Initialize GLFW
@@ -209,33 +212,46 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		glfwSetWindowShouldClose(window, true);
 }
 
+
+Sphere sphere1(glm::vec3(0.0f), 1.0f);
+Sphere sphere2(glm::vec3(4.0f), 3.0f);
+Sphere sphere3(glm::vec3(0.0f, -1.0f, 0.0f), 1.0f);
+
+AABB aabb1(glm::vec3(0.0f), glm::vec3(2.0f));
+AABB aabb2(glm::vec3(0.0f, 3.0f, 0.0f), glm::vec3(2.0f));
+AABB aabb3(glm::vec3(1.0f), glm::vec3(5.0f));
+AABB aabb4(glm::vec3(0.0f, -10.0f, 0.0f), glm::vec3(1.0f));
+
+OBB obb1;
+OBB obb2(glm::vec3(0.0f, -3.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }));
+OBB obb3(glm::vec3(3.2f), glm::vec3(2.0f));
+
+
 void test() {
-	std::cout << "Intersection tests: \n";
-	Sphere sphere1(glm::vec3(0.0f), 1.0f);
-	Sphere sphere2(glm::vec3(10.0f), 3.0f);
-	Sphere sphere3(glm::vec3(0.0f, -1.0f, 0.0f), 1.0f);
+	intersection_tests();
+	ray_tests();
+	line_tests();
+}
+
+void intersection_tests() {
+	std::cout << "Intersection tests: \n\n";
 	std::cout << "sphere1 vs sphere2: " << CheckIntersection(sphere1, sphere2) << std::endl;
 	std::cout << "sphere1 vs sphere3: " << CheckIntersection(sphere1, sphere3) << std::endl << std::endl;
 
-	AABB aabb1(glm::vec3(0.0f), glm::vec3(2.0f));
-	AABB aabb2(glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(2.0f));
-	AABB aabb3(glm::vec3(1.0f), glm::vec3(5.0f));
-	AABB aabb4(glm::vec3(0.0f, -10.0f, 0.0f), glm::vec3(1.0f));
 	std::cout << "aabb1 vs aabb2: " << CheckIntersection(aabb1, aabb2) << std::endl;
 	std::cout << "aabb1 vs aabb3: " << CheckIntersection(aabb1, aabb3) << std::endl;
 	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl << std::endl;
 
-	OBB obb1;
-	OBB obb2(glm::vec3(0.0f, -3.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }));
-	OBB obb3(glm::vec3(3.2f), glm::vec3(2.0f));
 	std::cout << "aabb1 vs obb1: " << CheckIntersection(aabb1, obb1) << std::endl;
 	std::cout << "aabb1 vs obb2: " << CheckIntersection(aabb1, obb2) << std::endl;
 	std::cout << "aabb1 vs obb3: " << CheckIntersection(aabb1, obb3) << std::endl << std::endl;
 
 	std::cout << "obb1 vs obb2: " << CheckIntersection(obb1, obb2) << std::endl;
-	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl;
+	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl << std::endl;
+}
 
-	std::cout << "Ray tests: \n";
+void ray_tests() {
+	std::cout << "Ray tests: \n\n";
 	Ray ray1(glm::vec3(0.0f), glm::vec3(0.0f, -1.0f, 0.0f));
 	std::cout << "ray1 vs sphere1: " << Raycast(sphere1, ray1) << std::endl;
 	std::cout << "ray1 vs sphere2: " << Raycast(sphere2, ray1) << std::endl;
@@ -248,5 +264,22 @@ void test() {
 
 	std::cout << "ray1 vs obb1: " << Raycast(obb1, ray1) << std::endl;
 	std::cout << "ray1 vs obb2: " << Raycast(obb2, ray1) << std::endl;
-	std::cout << "ray1 vs obb3: " << Raycast(obb3, ray1) << std::endl << std::endl;
+	std::cout << "ray1 vs obb3: " << Raycast(obb3, ray1) << std::endl << std::endl << std::endl;
+}
+
+void line_tests() {
+	std::cout << "Line tests: \n\n";
+	Line line1(glm::vec3(0.0f), glm::vec3(0.0f, -11.0f, 0.0f));
+	std::cout << "line1 vs sphere1: " << Linetest(sphere1, line1) << std::endl;
+	std::cout << "line1 vs sphere2: " << Linetest(sphere2, line1) << std::endl;
+	std::cout << "line1 vs sphere3: " << Linetest(sphere3, line1) << std::endl << std::endl;
+
+	std::cout << "line1 vs aabb1: " << Linetest(aabb1, line1) << std::endl;
+	std::cout << "line1 vs aabb2: " << Linetest(aabb2, line1) << std::endl;
+	std::cout << "line1 vs aabb3: " << Linetest(aabb3, line1) << std::endl;
+	std::cout << "line1 vs aabb4: " << Linetest(aabb4, line1) << std::endl << std::endl;
+
+	std::cout << "line1 vs obb1: " << Linetest(obb1, line1) << std::endl;
+	std::cout << "line1 vs obb2: " << Linetest(obb2, line1) << std::endl;
+	std::cout << "line1vs obb3: " << Linetest(obb3, line1) << std::endl << std::endl << std::endl;
 }
