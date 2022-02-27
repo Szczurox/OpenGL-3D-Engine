@@ -1,4 +1,4 @@
-#include"Object.hpp"
+#include"Common/Object.hpp"
 #include"Physics/PhysicsWorld.hpp"
 #include"Physics/ShapeIntersections.hpp"
 #include"Physics/LineIntersections.hpp"
@@ -226,6 +226,10 @@ OBB obb1;
 OBB obb2(glm::vec3(0.0f, -3.1f, 0.0f), glm::vec3(1.0f), glm::mat3({ 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }));
 OBB obb3(glm::vec3(3.2f), glm::vec3(2.0f));
 
+Triangle tri1(glm::vec3(-2.0f, -1.0f, 0.0f), glm::vec3(-3.0f, 0.0f, 0.0f), glm::vec3(-1.0f, 0.0f, 0.0f));
+Triangle tri2(glm::vec3(2.0f, 1.0f, 0.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+Triangle tri3(glm::vec3(-2.0f, -1.0f, 0.0f), glm::vec3(-4.0f, 0.0f, 1.0f), glm::vec3(-2.0f, 0.0f, 1.0f));
+
 
 void test() {
 	intersection_tests();
@@ -247,7 +251,11 @@ void intersection_tests() {
 	std::cout << "aabb1 vs obb3: " << CheckIntersection(aabb1, obb3) << std::endl << std::endl;
 
 	std::cout << "obb1 vs obb2: " << CheckIntersection(obb1, obb2) << std::endl;
-	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl << std::endl;
+	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl;
+
+	std::cout << "tri1 vs tri2: " << CheckIntersection(tri1, tri2) << std::endl;
+	std::cout << "tri1 vs tri3: " << CheckIntersection(tri1, tri3) << std::endl;
+	std::cout << "tri2 vs tri3: " << CheckIntersection(tri2, tri3) << std::endl << std::endl << std::endl;
 }
 
 void ray_tests() {
@@ -281,5 +289,5 @@ void line_tests() {
 
 	std::cout << "line1 vs obb1: " << Linetest(obb1, line1) << std::endl;
 	std::cout << "line1 vs obb2: " << Linetest(obb2, line1) << std::endl;
-	std::cout << "line1vs obb3: " << Linetest(obb3, line1) << std::endl << std::endl << std::endl;
+	std::cout << "line1 vs obb3: " << Linetest(obb3, line1) << std::endl << std::endl << std::endl;
 }

@@ -75,7 +75,7 @@
     <ClCompile Include="src\Graphics\Utils\VBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object.cpp">
+    <ClCompile Include="src\Common\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Model.cpp">
@@ -86,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>Source Files\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shapes\Line.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Shapes\AABB.cpp">
       <Filter>Source Files</Filter>
@@ -102,10 +99,13 @@
     <ClCompile Include="src\Physics\ShapeIntersections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shapes\Ray.cpp">
+    <ClCompile Include="src\Physics\LineIntersections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\LineIntersections.cpp">
+    <ClCompile Include="src\Physics\Utils\IntersectionUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shapes\Utils\ShapeUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -160,7 +160,7 @@
     <ClInclude Include="src\Graphics\Utils\VBO.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Object.hpp">
+    <ClInclude Include="src\Common\Object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\Model.hpp">
@@ -197,6 +197,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\LineIntersections.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Utils\IntersectionUtils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shapes\Utils\ShapeUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

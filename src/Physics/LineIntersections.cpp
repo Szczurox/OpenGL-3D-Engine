@@ -129,6 +129,25 @@ float Raycast(Plane& plane, Ray& ray) {
 	return t;
 }
 
+// Raycast Triangle
+float Raycast(Triangle& tri, Ray& ray) {
+	// Create a plane from the triangle
+	Plane plane = PlaneFromTriangle(tri);
+	float t = Raycast(plane, ray); 
+	if (t < 0.0f)
+		return t;
+	// Point on the plane where the ray hit
+	glm::vec3 result = ray.origin + ray.direction * t;
+	// Barycentric coordinates of the Raycast on the plane
+	glm::vec3 bar = Barycentric(result, tri);
+	// If the point is within the triangle, the ray hit the triangle
+	if (bar.x >= 0.0f && bar.x <= 1.0f && bar.y >= 0.0f && bar.y <= 1.0f && bar.z >= 0.0f && bar.z <= 1.0f)
+		return t;
+
+	// Ray did not hit the triangle
+	return -1;
+}
+
 // Linetest Sphere
 bool Linetest(Sphere& sphere, Line& line) {
 	// Closest point to the center of the sphere along the line segment
@@ -142,23 +161,19 @@ bool Linetest(Sphere& sphere, Line& line) {
 // Linetest AABB
 bool Linetest(AABB& aabb, Line& line) {
 	// Raycast AABB
-	Ray ray;
-	ray.origin = line.start;
-	ray.direction = glm::normalize(line.end - line.start);
+	Ray ray = RayFromLine(line);
 	float t = Raycast(aabb, ray);
-	// If t is less than the length of the line, the segment intersects the AABBs
-	return t >= 0 && t * t <= MagnitudeSq(line.end - line.start);
+	// If t is less than the length of the line, the segment intersects the AABB
+	return t >= 0 && t * t <= LengthSq(line);
 }
 
 // Linetest OBB
 bool Linetest(OBB& obb, Line& line) {
 	// Raycast AABB
-	Ray ray;
-	ray.origin = line.start;
-	ray.direction = glm::normalize(line.end - line.start);
+	Ray ray = RayFromLine(line);
 	float t = Raycast(obb, ray);
-	// If t is less than the length of the line, the segment intersects the AABBs
-	return t >= 0 && t * t <= MagnitudeSq(line.end - line.start);
+	// If t is less than the length of the line, the segment intersects the OBB
+	return t >= 0 && t * t <= LengthSq(line);
 }
 
 // Linetest Plane
@@ -169,8 +184,18 @@ bool Linetest(const Plane& plane, const Line& line) {
 	float nAB = glm::dot(plane.normal, ab);
 	// If the line and plane are parallel, nAB will be 0
 	// In this case we have to set it to some small number, but not 0 to prevent an exception
-	if (!nAB) nAB = 0.0000001;
+	if (!nAB) nAB = 0.0000001f;
 	float t = (plane.distance - nA) / nAB;
 	// Plane and Line intersect if the value of t falls within the 0 to 1 range
 	return t >= 0.0f && t <= 1.0f;
+}
+
+// Linetest Triangle
+bool Linetest(Triangle& triangle, Line& line) {
+	// Construct a ray out of the line being tested
+	Ray ray = RayFromLine(line);
+	// Raycasts triangle
+	float t = Raycast(triangle, ray);
+	// If t is less than the length of the line, the segment intersects the Triangle
+	return t >= 0 && t * t <= LengthSq(line);
 }

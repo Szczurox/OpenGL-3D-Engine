@@ -8,6 +8,7 @@ public:
 	glm::vec3 a;
 	glm::vec3 b;
 	glm::vec3 c;
+	glm::vec3* points[3] = { &a, &b, &c };
 
 	// Constructors
 	Triangle() : a(0.0f), b(0.0f), c(0.0f) {} // Empty

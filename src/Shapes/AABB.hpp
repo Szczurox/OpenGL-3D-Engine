@@ -18,6 +18,4 @@ public:
 	glm::vec3 GetMax();
 };
 
-AABB AABBFromMinMax(glm::vec3 min, glm::vec3 max);
-
 #endif 

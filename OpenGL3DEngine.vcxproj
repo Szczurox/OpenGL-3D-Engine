@@ -148,20 +148,20 @@
     <ClCompile Include="src\Physics\LineIntersections.cpp" />
     <ClCompile Include="src\Physics\PointTests.cpp" />
     <ClCompile Include="src\Physics\ShapeIntersections.cpp" />
+    <ClCompile Include="src\Physics\Utils\IntersectionUtils.cpp" />
     <ClCompile Include="src\Shapes\AABB.cpp" />
-    <ClCompile Include="src\Shapes\Line.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="src\Graphics\Camera.cpp" />
     <ClCompile Include="src\Graphics\Utils\EBO.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
-    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Common\Object.cpp" />
     <ClCompile Include="src\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="src\Physics\Rigidbody.cpp" />
     <ClCompile Include="src\Graphics\shaderClass.cpp" />
-    <ClCompile Include="src\Shapes\Ray.cpp" />
     <ClCompile Include="src\Shapes\Triangle.hpp" />
+    <ClCompile Include="src\Shapes\Utils\ShapeUtils.cpp" />
     <ClCompile Include="src\stb.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\Utils\VAO.cpp" />
@@ -184,12 +184,13 @@
     <ClInclude Include="src\Physics\LineIntersections.hpp" />
     <ClInclude Include="src\Physics\PointTests.hpp" />
     <ClInclude Include="src\Physics\ShapeIntersections.hpp" />
+    <ClInclude Include="src\Physics\Utils\IntersectionUtils.hpp" />
     <ClInclude Include="src\Shapes\AABB.hpp" />
     <ClInclude Include="src\Shapes\Line.hpp" />
     <ClInclude Include="src\Physics\PhysicsWorld.hpp" />
     <ClInclude Include="src\Physics\Rigidbody.hpp" />
     <ClInclude Include="src\Graphics\Model.hpp" />
-    <ClInclude Include="src\Object.hpp" />
+    <ClInclude Include="src\Common\Object.hpp" />
     <ClInclude Include="src\Graphics\Camera.hpp" />
     <ClInclude Include="src\Graphics\Utils\EBO.hpp" />
     <ClInclude Include="src\Graphics\Mesh.hpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="src\Shapes\Plane.hpp" />
     <ClInclude Include="src\Shapes\Ray.hpp" />
     <ClInclude Include="src\Shapes\Sphere.hpp" />
+    <ClInclude Include="src\Shapes\Utils\ShapeUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Models\bunny\scene.bin" />

@@ -4,8 +4,8 @@
 #include<string>
 #include<vector>
 
-#include"Graphics/Model.hpp"
-#include"Physics/PhysicsWorld.hpp"
+#include"../Graphics/Model.hpp"
+#include"../Physics/PhysicsWorld.hpp"
 
 class Object {
 	public:

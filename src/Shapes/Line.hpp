@@ -14,9 +14,6 @@ public:
 	Line() : start(0.0f, 0.0f, 0.0f), end(0.0f, 0.0f, 0.0f) {} // Empty
 	Line(const glm::vec3 s, const glm::vec3 e) :
 		start(s), end(e) {} // From start and end points
-
-	float Length();
-	float LengthSq();
 };
 
 

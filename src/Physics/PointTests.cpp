@@ -2,7 +2,7 @@
 
 // Sphere
 // Checks if point is inside the sphere
-bool PointInSphere(glm::vec3 point, Sphere& sphere) {
+bool CheckPoint(glm::vec3 point, Sphere& sphere) {
 	// Square magnitude of the line between the sphere center and the point
 	float magSq = glm::dot(point - sphere.position, point - sphere.position);
 	// Square radius of the sphere
@@ -24,7 +24,7 @@ glm::vec3 ClosestPoint(Sphere& sphere, glm::vec3 point) {
 
 // AABB
 // Checks if point is inside the AABB
-bool PointInAABB(glm::vec3 point, AABB& aabb) {
+bool CheckPoint(glm::vec3 point, AABB& aabb) {
 	// Get max and min point of the AABB
 	glm::vec3 min = aabb.GetMin();
 	glm::vec3 max = aabb.GetMax();
@@ -65,7 +65,7 @@ glm::vec3 ClosestPoint(AABB& aabb, glm::vec3 point) {
 
 // OBB
 // Checks if point is inside the OBB
-bool PointInOBB(glm::vec3 point, OBB& obb) {
+bool CheckPoint(glm::vec3 point, OBB& obb) {
 	// Point moved relative to the oriented bounding box
 	glm::vec3 dir = point - obb.position;
 	// Project the point onto each of the local axes of the box and 
@@ -116,7 +116,7 @@ glm::vec3 ClosestPoint(OBB& obb, glm::vec3 point) {
 
 // Plane
 // Checks if point is on the Plane
-bool PointOnPlane(glm::vec3 point, Plane& plane) {
+bool CheckPoint(glm::vec3 point, Plane& plane) {
 	// By subtracting the distance of the plane from the distance of the point, 
 	// we can check if a point is on the plane
 	float dot = glm::dot(point, plane.normal);
@@ -133,7 +133,7 @@ glm::vec3 ClosestPoint(Plane& plane, glm::vec3 point) {
 
 // Line
 // Checks if point is on the line
-bool PointOnLine(glm::vec3 point, Line& line) {
+bool CheckPoint(glm::vec3 point, Line& line) {
 	// Closest point on the segment to the tested point
 	glm::vec3 closest = ClosestPoint(line, point);
 	float distanceSq = glm::dot(closest - point, closest - point);
@@ -154,7 +154,7 @@ glm::vec3 ClosestPoint(Line& line, glm::vec3 point) {
 
 // Ray
 // Checks if point is intersected by the ray
-bool PointOnRay(glm::vec3 point, Ray& ray) {
+bool CheckPoint(glm::vec3 point, Ray& ray) {
 	// If the point is the origin of the ray we can return true early
 	if (point == ray.origin)
 		return true;
@@ -167,10 +167,54 @@ bool PointOnRay(glm::vec3 point, Ray& ray) {
 }
 
 // Returns closest point on the Ray to a given point
-glm::vec3 ClosestPoint( Ray& ray, glm::vec3 point) {
+glm::vec3 ClosestPoint(Ray& ray, glm::vec3 point) {
 	// The point projected onto the ray
 	float t = glm::dot(point - ray.origin, ray.direction);
 	// Clamp t point to positive direction
 	t = fmaxf(t, 0.0f);
 	return glm::vec3(ray.origin + ray.direction * t);
+}
+
+// Triangle
+// Checks if point is intersected by the triangle
+bool CheckPoint(glm::vec3 point, Triangle& triangle) {
+	// Temporary triangle size of the original triangle with the local coordinate system of the point
+	glm::vec3 a = triangle.a - point; // A
+	glm::vec3 b = triangle.b - point; // B
+	glm::vec3 c = triangle.c - point; // C
+	// Normal of sides of the pyramid created using the point (P) and the temporary triangle (ABC)
+	glm::vec3 nPBC = glm::cross(b, c); // P + B + C
+	glm::vec3 nPCA = glm::cross(c, a); // P + C + A
+	glm::vec3 nPAB = glm::cross(a, b); // P + A + B
+	// If the faces of the pyramid do not have the same normal, the point is not in the triangle
+	if (glm::dot(nPBC, nPCA) < 0.0f || glm::dot(nPBC, nPAB) < 0.0f)
+		return false;
+	// If all faces of the pyramid have the same normal, the pyramid is flat
+	// That means the point is in the triangle
+	return true;
+}
+
+// Returns closest point on the Triangle to a given point
+glm::vec3 ClosestPoint(Triangle& triangle, glm::vec3 point) {
+	Plane plane = PlaneFromTriangle(triangle);
+	glm::vec3 closest = ClosestPoint(plane, point);
+	if (CheckPoint(closest, triangle)) 
+		return closest;
+	// Closest point to the each side of the triangle
+	Line ab(triangle.a, triangle.b); // AB
+	Line bc(triangle.b, triangle.c); // BC
+	Line ca(triangle.c, triangle.a); // CA
+	glm::vec3 c1 = ClosestPoint(ab, point);
+	glm::vec3 c2 = ClosestPoint(bc, point);
+	glm::vec3 c3 = ClosestPoint(ca, point);
+	// Measure how far each of the closest points are from the test point
+	float magSq1 = MagnitudeSq(point - c1);
+	float magSq2 = MagnitudeSq(point - c2);
+	float magSq3 = MagnitudeSq(point - c3);
+	// Return closest of the closest points
+	if (magSq1 < magSq2 && magSq1 < magSq3) 
+		return c1;
+	else if (magSq2 < magSq1 && magSq2 < magSq3)
+		return c2;
+	return c3;
 }

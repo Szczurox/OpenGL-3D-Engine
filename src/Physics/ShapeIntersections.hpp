@@ -3,20 +3,6 @@
 
 #include"PointTests.hpp"
 
-// SAT
-typedef struct Interval {
-	float min;
-	float max;
-} Interval;
-
-// Projects the shape onto an axis and returns an interval
-Interval GetInterval(AABB& aabb, glm::vec3 axis);
-Interval GetInterval(OBB& obb, glm::vec3 axis);
-
-// Checks if is overlaping on an axis
-bool OverlapOnAxis(AABB& aabb, OBB& obb, glm::vec3 axis);
-bool OverlapOnAxis(OBB& obb1, OBB& obb2, glm::vec3 axis);
-
 // Sphere vs Sphere
 bool CheckIntersection(Sphere& s1, Sphere& s2);
 // Sphere vs AABB
@@ -43,5 +29,19 @@ bool CheckIntersection(OBB& obb, Plane& plane);
 inline bool CheckIntersection(Plane& plane, OBB& obb);
 // Plane vs Plane
 bool CheckIntersection(Plane& p1, Plane& p2);
+// Triangle vs Sphere
+bool CheckIntersection(Triangle& tri , Sphere& sphere);
+inline bool CheckIntersection(Sphere& sphere, Triangle& tri);
+// Triangle vs AABB
+bool CheckIntersection(Triangle& tri, AABB& aabb);
+inline bool CheckIntersection(AABB& aabb, Triangle& tri);
+// Triangle vs OBB
+bool CheckIntersection(Triangle& tri, OBB& obb);
+inline bool CheckIntersection(OBB& obb, Triangle& tri);
+// Triangle vs Plane
+bool CheckIntersection(Triangle& tri, Plane& plane);
+inline bool CheckIntersection(Plane& plane, Triangle& tri);
+// Triangle vs Triangle
+bool CheckIntersection(Triangle& tri1, Triangle& tri2);
 
 #endif

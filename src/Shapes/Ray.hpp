@@ -14,7 +14,4 @@ public:
 		: origin(o), direction(glm::normalize(d)) {}; // From origin and direction
 };
 
-// Creates ray from 2 points
-Ray RayFromPoints(glm::vec3 from, glm::vec3 to);
-
 #endif

@@ -68,84 +68,6 @@ bool CheckIntersection(AABB& a, AABB& b) {
 			(aMin.z <= bMax.z && aMax.z >= bMin.z);
 }
 
-
-// SAT functions
-Interval GetInterval(AABB& aabb, glm::vec3 axis) {
-	// Get min and max points of AABB
-	glm::vec3 n = aabb.GetMin();
-	glm::vec3 x = aabb.GetMax();
-	// Vertices of AABB
-	glm::vec3 vertices[8] = {
-		glm::vec3(n.x, x.y, x.z),
-		glm::vec3(n.x, x.y, n.z),
-		glm::vec3(n.x, n.y, x.z),
-		glm::vec3(n.x, n.y, n.z),
-		glm::vec3(x.x, x.y, x.z),
-		glm::vec3(x.x, x.y, n.z),
-		glm::vec3(x.x, n.y, x.z),
-		glm::vec3(x.x, n.y, n.z)
-	};
-	Interval result;
-	result.min = result.max = glm::dot(axis, vertices[0]);
-	// Project each vertex onto the provided axes
-	for (int i = 1; i < 8; i++) {
-		float projection = glm::dot(axis, vertices[i]);
-		result.min = (projection < result.min) ? projection : result.min;
-		result.max = (projection > result.max) ? projection : result.max;
-	}
-	return result;
-}
-
-Interval GetInterval(OBB& obb, glm::vec3 axis) {
-	// OBB center
-	glm::vec3 c = obb.position;
-	// OBB extents
-	glm::vec3 e = obb.size; 
-	// OBB orientation
-	glm::mat3 o = obb.orientation;
-	// OBB axis
-	glm::vec3 a[3] = {
-		glm::vec3(o[0].x, o[0].y, o[0].z),
-		glm::vec3(o[1].x, o[1].y, o[1].z),
-		glm::vec3(o[2].x, o[2].y, o[2].z),
-	};
-	// OBB vertices
-	glm::vec3 vertices[8] = {
-		c + a[0] * e[0] + a[1] * e[1] + a[2] * e[2],
-		c - a[0] * e[0] + a[1] * e[1] + a[2] * e[2],
-		c + a[0] * e[0] - a[1] * e[1] + a[2] * e[2],
-		c + a[0] * e[0] + a[1] * e[1] - a[2] * e[2],
-		c - a[0] * e[0] - a[1] * e[1] - a[2] * e[2],
-		c + a[0] * e[0] - a[1] * e[1] - a[2] * e[2],
-		c - a[0] * e[0] + a[1] * e[1] - a[2] * e[2],
-		c - a[0] * e[0] - a[1] * e[1] + a[2] * e[2]
-	};
-	Interval result;
-	result.min = result.max = glm::dot(axis, vertices[0]);
-	// Project each vertex onto the provided axes
-	for (int i = 1; i < 8; i++) {
-		float projection = glm::dot(axis, vertices[i]);
-		result.min = (projection < result.min) ? projection : result.min;
-		result.max = (projection > result.max) ? projection : result.max;
-	}
-
-	return result;
-}
-
-// Checks if is overlaping on axis
-bool OverlapOnAxis(AABB& aabb, OBB& obb, glm::vec3 axis) {
-	Interval a = GetInterval(aabb, axis);
-	Interval b = GetInterval(obb, axis);
-	return ((b.min <= a.max) && (a.min <= b.max));
-}
-
-bool OverlapOnAxis(OBB& obb1, OBB& obb2, glm::vec3 axis) {
-	Interval a = GetInterval(obb1, axis);
-	Interval b = GetInterval(obb2, axis);
-	return ((b.min <= a.max) && (a.min <= b.max));
-}
-
-
 // AABB vs OBB intersection
 bool CheckIntersection(AABB& aabb, OBB& obb) {
 	// OBB orientation
@@ -262,4 +184,149 @@ bool CheckIntersection(Plane& p1, Plane& p2) {
 	// Check the length of this new vector
 	// if it is 0, the planes are parallel
 	return !ET(MagnitudeSq(dir), 0.0f);
+}
+
+// Triangle vs Sphere
+bool CheckIntersection(Triangle& tri, Sphere& sphere) {
+	// Closest point on the triangle to the sphere
+	glm::vec3 closest = ClosestPoint(tri, sphere.position);
+	// Squared distance between the closest point and the  position of the sphere
+	float sqDist = MagnitudeSq(closest - sphere.position);
+	// Intersection occurs if the squared distance is less than the squared radius of the sphere
+	return sqDist <= sphere.radius * sphere.radius;
+}
+
+// Sphere vs Triangle
+inline bool CheckIntersection(Sphere& sphere, Triangle& tri) {
+	return CheckIntersection(tri, sphere);
+}
+
+// Triangle vs AABB
+bool CheckIntersection(Triangle& tri, AABB& aabb) {
+	// Edge vectors of the triangle
+	glm::vec3 e1 = tri.b - tri.a;
+	glm::vec3 e2 = tri.c - tri.b;
+	glm::vec3 e3 = tri.a - tri.c;
+	// Face normals of the AABB
+	glm::vec3 n1(1.0f, 0.0f, 0.0f);
+	glm::vec3 n2(0.0f, 1.0f, 0.0f);
+	glm::vec3 n3(0.0f, 0.0f, 1.0f);
+	glm::vec3 axes[13] = {
+		n1, // AABB Axis 1
+		n2, // AABB Axis 2
+		n3, // AABB Axis 3
+		glm::cross(e1, e2), // Normal of the triangle
+		// Cross products of every normal of the AABB with every edge of the triangle
+		glm::cross(n1, e1), glm::cross(n1, e2), glm::cross(n1, e3),
+		glm::cross(n2, e1), glm::cross(n2, e2), glm::cross(n2, e3),
+		glm::cross(n3, e1), glm::cross(n3, e2), glm::cross(n3, e3),
+	};
+	// Check if AABB and Triangle are overlaping on all axes
+	for (int i = 0; i < 13; ++i) {
+		// If AABB and Triangle don't overlap on at least 1 axis, intersection doesn't occur
+		if (!OverlapOnAxis(aabb, tri, axes[i])) {
+			return false; // Separating axis found
+		}
+	}
+	return true; // Separating axis not found
+}
+
+// AABB vs Triangle
+inline bool CheckIntersection(AABB& aabb, Triangle& tri) {
+	return CheckIntersection(tri, aabb);
+}
+
+// Triangle vs OBB
+bool CheckIntersection(Triangle& tri, OBB& obb) {
+	// Edge vectors of the triangle
+	glm::vec3 e1 = tri.b - tri.a;
+	glm::vec3 e2 = tri.c - tri.b;
+	glm::vec3 e3 = tri.a - tri.c;
+	// Face normals of the OBB
+	glm::mat3 o = obb.orientation;
+	glm::vec3 n1(o[0].x, o[0].y, o[0].z);
+	glm::vec3 n2(o[1].x, o[1].y, o[1].z);
+	glm::vec3 n3(o[2].x, o[2].y, o[2].z);
+	glm::vec3 axes[13] = {
+		n1, // AABB Axis 1
+		n2, // AABB Axis 2
+		n3, // AABB Axis 3
+		glm::cross(e1, e2), // Normal of the triangle
+		// Cross products of every normal of the AABB with every edge of the triangle
+		glm::cross(n1, e1), glm::cross(n1, e2), glm::cross(n1, e3),
+		glm::cross(n2, e1), glm::cross(n2, e2), glm::cross(n2, e3),
+		glm::cross(n3, e1), glm::cross(n3, e2), glm::cross(n3, e3),
+	};
+	// Check if OBB and Triangle are overlaping on all axes
+	for (int i = 0; i < 13; ++i) {
+		// If OBB and Triangle don't overlap on at least 1 axis, intersection doesn't occur
+		if (!OverlapOnAxis(obb, tri, axes[i])) {
+			return false; // Separating axis found
+		}
+	}
+	return true; // Separating axis not found
+}
+
+// OBB vs Triangle
+inline bool CheckIntersection(OBB& obb, Triangle& tri) {
+	return CheckIntersection(tri, obb);
+}
+
+// Triangle vs Plane
+bool CheckIntersection(Triangle& tri, Plane& plane) {
+	// On which side of the plane is every point of the triangle
+	float s1 = PlaneEquation(tri.a, plane);
+	float s2 = PlaneEquation(tri.b, plane);
+	float s3 = PlaneEquation(tri.c, plane);
+	
+	// If all points are on the plane, the plain and the triangle are intersecting
+	if (ET(s1, 0) && ET(s2, 0) && ET(s3, 0)) 
+		return true;
+
+	// If all points of the triangle are in front of the plane, intersection doesn't occur
+	if (s1 > 0 && s2 > 0 && s3 > 0) 
+		return false;
+
+	// If all points of the triangle are behind the plane, intersection doesn't occur
+	if (s1 < 0 && s2 < 0 && s3 < 0) 
+		return false;
+	
+	// 1 point is on the opposite side of the plane than the other 2, intersection occurs
+	return true;
+}
+
+// Plane vs Triangle
+inline bool CheckIntersection(Plane& plane, Triangle& tri) {
+	return CheckIntersection(tri, plane);
+}
+
+bool CheckIntersection(Triangle& tri1, Triangle& tri2) {
+	glm::vec3 axes[11] = {
+		SatCrossEdge(tri1.a, tri1.b, tri1.b, tri1.c), // Normal of the first triangle
+		SatCrossEdge(tri2.a, tri2.b, tri2.b, tri2.c), // Normal of the first triangle
+
+		// Better cross products for every edge of the triangles
+		SatCrossEdge(tri2.a, tri2.b, tri1.a, tri1.b),
+		SatCrossEdge(tri2.a, tri2.b, tri1.b, tri1.c),
+		SatCrossEdge(tri2.a, tri2.b, tri1.c, tri1.a),
+
+		SatCrossEdge(tri2.b, tri2.c, tri1.a, tri1.b),
+		SatCrossEdge(tri2.b, tri2.c, tri1.b, tri1.c),
+		SatCrossEdge(tri2.b, tri2.c, tri1.c, tri1.a),
+
+		SatCrossEdge(tri2.c, tri2.a, tri1.a, tri1.b),
+		SatCrossEdge(tri2.c, tri2.a, tri1.b, tri1.c),
+		SatCrossEdge(tri2.c, tri2.a, tri1.c, tri1.a),
+	};
+	// Check if Triangles are overlaping on all axes
+	for (int i = 0; i < 11; ++i) {
+		if (!OverlapOnAxis(tri1, tri2, axes[i])) {
+			// If the edges being tested are on a straight line, the SatCrossEdge function returns a zero vector
+			// This will prevent any axis with a length of zero from returning true
+			if (!ET(MagnitudeSq(axes[i]), 0)) {
+				return false; // Seperating axis found
+			}
+		}
+	}
+	return true; // Seperating axis not found
 }
