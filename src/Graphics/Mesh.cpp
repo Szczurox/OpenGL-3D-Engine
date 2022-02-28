@@ -16,7 +16,7 @@ void Mesh::calcVAO() {
 
 	// Vertex Buffer Object linked to veritces
 	VBO VBO(vertices);
-	// Element Buffer Object  linked to indices
+	// Element Buffer Object linked to indices
 	EBO EBO(indices);
 
 	// Links VBO attributes to VAO 

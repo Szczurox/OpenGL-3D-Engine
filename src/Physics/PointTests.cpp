@@ -79,12 +79,8 @@ bool CheckPoint(glm::vec3 point, OBB& obb) {
 		float distance = glm::dot(dir, axis);
 		// The point is not inside the box if the distance is greater than the extent of the box, 
 		// or less than the negative extent of the box
-		if (distance > obb.size[i]) {
+		if (distance > obb.size[i] || distance < -obb.size[i])
 			return false;
-		}
-		if (distance < -obb.size[i]) {
-			return false;
-		}
 	}
 	return true;
 }
@@ -102,14 +98,13 @@ glm::vec3 ClosestPoint(OBB& obb, glm::vec3 point) {
 		// Project the relative point onto that axis
 		float distance = glm::dot(dir, axis);
 		// Clamp component on axis if needed
-		if (distance > obb.size[i]) {
+		if (distance > obb.size[i]) 
 			distance = obb.size[i];
-		}
-		if (distance < -obb.size[i]) {
+
+		if (distance < -obb.size[i]) 
 			distance = -obb.size[i];
-		}
 		// Adjust the final point by the axis and the current projected distance
-		result = result + (axis * distance);
+		result += axis * distance;
 	}
 	return result;
 }

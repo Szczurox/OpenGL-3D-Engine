@@ -283,12 +283,9 @@ bool CheckIntersection(Triangle& tri, Plane& plane) {
 	if (ET(s1, 0) && ET(s2, 0) && ET(s3, 0)) 
 		return true;
 
-	// If all points of the triangle are in front of the plane, intersection doesn't occur
-	if (s1 > 0 && s2 > 0 && s3 > 0) 
-		return false;
-
-	// If all points of the triangle are behind the plane, intersection doesn't occur
-	if (s1 < 0 && s2 < 0 && s3 < 0) 
+	// If all points of the triangle are behind or in front of the plane,
+	// intersection doesn't occur
+	if ((s1 < 0 && s2 < 0 && s3 < 0) || (s1 > 0 && s2 > 0 && s3 > 0))
 		return false;
 	
 	// 1 point is on the opposite side of the plane than the other 2, intersection occurs

@@ -1,7 +1,7 @@
 #ifndef INTERSECTION_UTILS_H
 #define INTERSECTION_UTILS_H
 
-#include"../../Shapes/Utils/ShapeUtils.hpp"
+#include"../../Colliders/Utils/ShapeUtils.hpp"
 
 // SAT
 typedef struct Interval {
