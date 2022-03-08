@@ -33,8 +33,8 @@ float Raycast(Sphere& sphere, Ray& ray) {
 // Raycast AABB
 float Raycast(AABB& aabb, Ray& ray) {
 	// Get AABB's min and max points
-	glm::vec3 min = aabb.GetMin();
-	glm::vec3 max = aabb.GetMax();
+	glm::vec3 min = GetMin(aabb);
+	glm::vec3 max = GetMax(aabb);
 	// Intersections of the ray against each of the three slabs which make up the AABB
 	float tMinX = (min.x - ray.origin.x) / ray.direction.x;
 	float tMaxX = (max.x - ray.origin.x) / ray.direction.x;
@@ -145,6 +145,48 @@ float Raycast(Triangle& tri, Ray& ray) {
 		return t;
 
 	// Ray did not hit the triangle
+	return -1;
+}
+
+// Raycast Mesh Collider
+float Raycast(MeshCollider& mesh, Ray& ray) {
+	// If the mesh has no accelerator structure, check every triangle in the a linear fashion
+	if (mesh.accelerator == 0) {
+		for (int i = 0; i < mesh.numTriangles; ++i) {
+			float result = Raycast(mesh.triangles[i], ray);
+			if (result >= 0)
+				return result;
+		}
+	}
+	else {
+		// List of nodes to process
+		std::list<BVHNode*> toProcess;
+		toProcess.push_front(mesh.accelerator);
+		// Walk through the BVH tree looking for intersection
+		while (!toProcess.empty()) {
+			// Get current node
+			BVHNode* iterator = *(toProcess.begin());
+			toProcess.erase(toProcess.begin());
+			// If the node has triangles, iterate through every triangle and do raycast
+			if (iterator->numTriangles >= 0) {
+				for (int i = 0; i < iterator->numTriangles; ++i) {
+					// Raycast against the triangle
+					float r = Raycast(mesh.triangles[iterator->triangles[i]], ray);
+					if (r >= 0)
+						return r;
+				}
+			}
+			// If the node has children perform a Raycast against the bounds of each child
+			if (iterator->children != 0) {
+				for (int i = 8 - 1; i >= 0; --i) {
+					// If is intersecting, add the node to the list of nodes to process
+					if (Raycast(iterator->children[i].bounds, ray) >= 0)
+						toProcess.push_front(&iterator->children[i]);
+				}
+			}
+		}
+	}
+	// If no intersection with ray was detected, return -1
 	return -1;
 }
 

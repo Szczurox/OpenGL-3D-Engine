@@ -2,7 +2,7 @@
 #define MESH_COLLIDER_HELPERS_H
 
 #include"MeshCollider.hpp"
-#include"../../Physics/ShapeIntersections.hpp"
+#include"../../ShapeIntersections.hpp"
 
 // Creates the root BVHNode for the provided mesh
 void AccelerateMesh(MeshCollider& mesh);

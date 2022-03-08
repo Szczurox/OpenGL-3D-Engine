@@ -35,5 +35,9 @@ AABB AABBFromMinMax(glm::vec3 min, glm::vec3 max);
 Ray RayFromPoints(glm::vec3 from, glm::vec3 to);
 // Creates ray from a line
 Ray RayFromLine(Line& line);
+// Minimum point of AABB
+glm::vec3 GetMin(AABB& aabb);
+// Maximum point of AABB
+glm::vec3 GetMax(AABB& aabb);
 
 #endif

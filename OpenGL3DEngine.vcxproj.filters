@@ -87,28 +87,25 @@
     <ClCompile Include="src\Physics\PhysicsWorld.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Colliders\AABB.cpp">
+    <ClCompile Include="src\Physics\Intersections\Colliders\Triangle.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Colliders\Triangle.hpp">
+    <ClCompile Include="src\Physics\Intersections\PointTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\PointTests.cpp">
+    <ClCompile Include="src\Physics\Intersections\ShapeIntersections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\ShapeIntersections.cpp">
+    <ClCompile Include="src\Physics\Intersections\LineIntersections.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\LineIntersections.cpp">
+    <ClCompile Include="src\Physics\Intersections\IntersectionUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\Utils\IntersectionUtils.cpp">
+    <ClCompile Include="src\Physics\Intersections\Colliders\Utils\ShapeUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Colliders\Utils\ShapeUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Colliders\MeshCollider\MeshHelpers.cpp">
+    <ClCompile Include="src\Physics\Intersections\Colliders\MeshCollider\MeshHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -175,46 +172,49 @@
     <ClInclude Include="src\Physics\PhysicsWorld.hpp">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\Line.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\Line.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\Ray.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\Ray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\Sphere.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\Sphere.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\AABB.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\AABB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\OBB.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\OBB.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\Plane.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\PointTests.hpp">
+    <ClInclude Include="src\Physics\Intersections\PointTests.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\ShapeIntersections.hpp">
+    <ClInclude Include="src\Physics\Intersections\ShapeIntersections.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\LineIntersections.hpp">
+    <ClInclude Include="src\Physics\Intersections\LineIntersections.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Physics\Utils\IntersectionUtils.hpp">
+    <ClInclude Include="src\Physics\Intersections\IntersectionUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\Utils\ShapeUtils.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\Utils\ShapeUtils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\MeshCollider\MeshCollider.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\MeshCollider\MeshCollider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\MeshCollider\BVHNode.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\MeshCollider\BVHNode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Colliders\MeshCollider\MeshHelpers.hpp">
+    <ClInclude Include="src\Physics\Intersections\Colliders\MeshCollider\MeshHelpers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\Intersections\Colliders\Collider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,8 @@
 #ifndef POINT_TESTS_H
 #define POINT_TESTS_H
 
-#include"Utils/IntersectionUtils.hpp"
+#include"IntersectionUtils.hpp"
+#include<iostream>
 
 // Sphere
 bool CheckPoint(glm::vec3 point, Sphere& sphere);

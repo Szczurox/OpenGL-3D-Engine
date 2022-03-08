@@ -63,7 +63,7 @@ void SplitBVHNode(BVHNode* node, MeshCollider& mesh, int depth) {
 			for (int j = 0; j < node->numTriangles; ++j) {
 				Triangle t = mesh.triangles[node->triangles[j]];
 				// If the triangle intersects bounds of this node, increase triangle count
-				if (CheckIntersection(t, node->children[i].bounds))
+				if (CheckIntersection<Triangle&, AABB&>(t, node->children[i].bounds))
 					node->children[i].numTriangles += 1;
 			}
 			if (node->children[i].numTriangles == 0)
@@ -75,7 +75,7 @@ void SplitBVHNode(BVHNode* node, MeshCollider& mesh, int depth) {
 			// add its index to the list of triangle indices
 			for (int j = 0; j < node->numTriangles; ++j) {
 				Triangle t = mesh.triangles[node->triangles[j]];
-				if (CheckIntersection(t, node->children[i].bounds))
+				if (CheckIntersection<Triangle&, AABB&>(t, node->children[i].bounds))
 					node->children[i].triangles[index++] = node->triangles[j];
 			}
 			node->numTriangles = 0;

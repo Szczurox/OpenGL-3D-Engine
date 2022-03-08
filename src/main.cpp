@@ -1,7 +1,7 @@
 #include"Common/Object.hpp"
 #include"Physics/PhysicsWorld.hpp"
-#include"Physics/ShapeIntersections.hpp"
-#include"Physics/LineIntersections.hpp"
+#include"Physics/Intersections/ShapeIntersections.hpp"
+#include"Physics/Intersections/LineIntersections.hpp"
 
 // Vertices coordinates of a floor
 Vertex vertices[] =
@@ -230,32 +230,33 @@ Triangle tri1(glm::vec3(-2.0f, -1.0f, 0.0f), glm::vec3(-3.0f, 0.0f, 0.0f), glm::
 Triangle tri2(glm::vec3(2.0f, 1.0f, 0.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 Triangle tri3(glm::vec3(-2.0f, -1.0f, 0.0f), glm::vec3(-4.0f, 0.0f, 1.0f), glm::vec3(-2.0f, 0.0f, 1.0f));
 
-
 void test() {
 	intersection_tests();
 	ray_tests();
 	line_tests();
+	MeshCollider mesh;
+	std::cout << CheckIntersection<AABB&>(mesh, aabb1) << std::endl;
 }
 
 void intersection_tests() {
-	std::cout << "Intersection tests: \n\n";
-	std::cout << "sphere1 vs sphere2: " << CheckIntersection(sphere1, sphere2) << std::endl;
-	std::cout << "sphere1 vs sphere3: " << CheckIntersection(sphere1, sphere3) << std::endl << std::endl;
+	std::cout << "Intersection tests: \n\n"; 
+	std::cout << "sphere1 vs sphere2: " << CheckIntersection<Sphere&, Sphere&>(sphere1, sphere2) << std::endl;
+	std::cout << "sphere1 vs sphere3: " << CheckIntersection<Sphere&, Sphere&>(sphere1, sphere3) << std::endl << std::endl;
 
-	std::cout << "aabb1 vs aabb2: " << CheckIntersection(aabb1, aabb2) << std::endl;
-	std::cout << "aabb1 vs aabb3: " << CheckIntersection(aabb1, aabb3) << std::endl;
-	std::cout << "aabb1 vs aabb4: " << CheckIntersection(aabb2, aabb4) << std::endl << std::endl;
+	std::cout << "aabb1 vs aabb2: " << CheckIntersection<AABB&, AABB&>(aabb1, aabb2) << std::endl;
+	std::cout << "aabb1 vs aabb3: " << CheckIntersection<AABB&, AABB&>(aabb1, aabb3) << std::endl;
+	std::cout << "aabb1 vs aabb4: " << CheckIntersection<AABB&, AABB&>(aabb2, aabb4) << std::endl << std::endl;
 
-	std::cout << "aabb1 vs obb1: " << CheckIntersection(aabb1, obb1) << std::endl;
-	std::cout << "aabb1 vs obb2: " << CheckIntersection(aabb1, obb2) << std::endl;
-	std::cout << "aabb1 vs obb3: " << CheckIntersection(aabb1, obb3) << std::endl << std::endl;
+	std::cout << "aabb1 vs obb1: " << CheckIntersection<AABB&, OBB&>(aabb1, obb1) << std::endl;
+	std::cout << "aabb1 vs obb2: " << CheckIntersection<AABB&, OBB&>(aabb1, obb2) << std::endl;
+	std::cout << "aabb1 vs obb3: " << CheckIntersection<AABB&, OBB&>(aabb1, obb3) << std::endl << std::endl;
 
-	std::cout << "obb1 vs obb2: " << CheckIntersection(obb1, obb2) << std::endl;
-	std::cout << "obb1 vs obb3: " << CheckIntersection(obb1, obb3) << std::endl << std::endl;
+	std::cout << "obb1 vs obb2: " << CheckIntersection<OBB&, OBB&>(obb1, obb2) << std::endl;
+	std::cout << "obb1 vs obb3: " << CheckIntersection<OBB&, OBB&>(obb1, obb3) << std::endl << std::endl;
 
-	std::cout << "tri1 vs tri2: " << CheckIntersection(tri1, tri2) << std::endl;
-	std::cout << "tri1 vs tri3: " << CheckIntersection(tri1, tri3) << std::endl;
-	std::cout << "tri2 vs tri3: " << CheckIntersection(tri2, tri3) << std::endl << std::endl << std::endl;
+	std::cout << "tri1 vs tri2: " << CheckIntersection<Triangle&, Triangle&>(tri1, tri2) << std::endl;
+	std::cout << "tri1 vs tri3: " << CheckIntersection<Triangle&, Triangle&>(tri1, tri3) << std::endl;
+	std::cout << "tri2 vs tri3: " << CheckIntersection<Triangle&, Triangle&>(tri2, tri3) << std::endl << std::endl << std::endl;
 }
 
 void ray_tests() {

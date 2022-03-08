@@ -44,3 +44,19 @@ Ray RayFromPoints(glm::vec3 from, glm::vec3 to) {
 Ray RayFromLine(Line& line) {
 	return RayFromPoints(line.start, line.end);
 }
+
+// Minimum point of AABB
+glm::vec3 GetMin(AABB& aabb) {
+	glm::vec3 p1 = aabb.position + aabb.size;
+	glm::vec3 p2 = aabb.position - aabb.size;
+
+	return glm::vec3(fminf(p1.x, p2.x), fminf(p1.y, p2.y), fminf(p1.z, p2.z));
+}
+
+// Maximum point of AABB
+glm::vec3 GetMax(AABB& aabb) {
+	glm::vec3 p1 = aabb.position + aabb.size;
+	glm::vec3 p2 = aabb.position - aabb.size;
+
+	return glm::vec3(fmaxf(p1.x, p2.x), fmaxf(p1.y, p2.y), fmaxf(p1.z, p2.z));
+}

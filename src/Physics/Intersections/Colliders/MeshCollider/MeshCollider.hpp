@@ -1,9 +1,10 @@
-#ifndef MESH_CLASS_H
-#define MESH_CLASS_H
+#ifndef MESH_COLLIDER_CLASS_H
+#define MESH_COLLIDER_CLASS_H
 
 #include"BVHNode.hpp"
+#include"../Collider.hpp"
 
-class MeshCollider {
+class MeshCollider: public Collider {
 public:
 	// Number of triangles in mesh
 	int numTriangles;
@@ -14,8 +15,7 @@ public:
 	};
 	BVHNode* accelerator;
 	// Constructors
-	MeshCollider() : numTriangles(0), values(0), accelerator(0) {} // Empty
+	MeshCollider() : numTriangles(0), values(0), accelerator(0) { type = ColliderType::MESH; } // Empty
 };
-
 
 #endif

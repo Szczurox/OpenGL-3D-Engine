@@ -26,8 +26,8 @@ glm::vec3 ClosestPoint(Sphere& sphere, glm::vec3 point) {
 // Checks if point is inside the AABB
 bool CheckPoint(glm::vec3 point, AABB& aabb) {
 	// Get max and min point of the AABB
-	glm::vec3 min = aabb.GetMin();
-	glm::vec3 max = aabb.GetMax();
+	glm::vec3 min = GetMin(aabb);
+	glm::vec3 max = GetMax(aabb);
 
 	// Not intersecting if any component of the point is smaller than 
 	// the respective component of the min point of the AABB
@@ -45,8 +45,8 @@ bool CheckPoint(glm::vec3 point, AABB& aabb) {
 glm::vec3 ClosestPoint(AABB& aabb, glm::vec3 point) {
 	glm::vec3 result = point;
 	// Get max and min point of the AABB
-	glm::vec3 min = aabb.GetMin();
-	glm::vec3 max = aabb.GetMax();
+	glm::vec3 min = GetMin(aabb);
+	glm::vec3 max = GetMax(aabb);
 
 	// Point is clamped to make sure that it will never 
 	// be smaller than min point or greater than max point

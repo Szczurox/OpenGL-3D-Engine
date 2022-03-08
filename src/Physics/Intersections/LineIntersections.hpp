@@ -11,6 +11,7 @@ float Raycast(AABB& aabb, Ray& ray); // Raycast AABB
 float Raycast(OBB& obb, Ray& ray); // Raycast OBB
 float Raycast(Plane& plane, Ray& ray); // Raycast Plane
 float Raycast(Triangle& plane, Ray& ray); // Raycast Triangle
+float Raycast(MeshCollider& mesh, Ray& ray); // Raycast Mesh Collider
 
 // Linetest 
 // Checks if a line intersects a shape, returns boolean value

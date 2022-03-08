@@ -3,8 +3,8 @@
 // Projects AABB onto an axis and returns an interval
 Interval GetInterval(AABB& aabb, glm::vec3 axis) {
 	// Get min and max points of AABB
-	glm::vec3 n = aabb.GetMin();
-	glm::vec3 x = aabb.GetMax();
+	glm::vec3 n = GetMin(aabb); 
+	glm::vec3 x = GetMax(aabb);
 	// Vertices of AABB
 	glm::vec3 vertices[8] = {
 		glm::vec3(n.x, x.y, x.z),
