@@ -1,5 +1,5 @@
 # OpenGL 3D Engine
-OpenGL 3.3 3D engine created in C++
+OpenGL 3.3 3D engine created in C++ (physics part is not finished)
 
 You need the following libraries:
 * `GLFW`
